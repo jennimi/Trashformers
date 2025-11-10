@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Dash Settings")]
     public float dashSpeed = 12f;
-    public float dashDuration = 0.2f;
+    public float dashDuration = 0.3f;     // shorter movement burst
+    public float dashAnimBuffer = 0.15f;  // keep dash animation alive briefly after movement
     public float dashCooldown = 1f;
     private bool isDashing = false;
     private bool canDash = true;
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) return; // skip movement input while dashing
+        if (isDashing) return; // skip normal input during dash
 
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
@@ -48,7 +49,6 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("LastMoveY", lastMoveDir.y);
         }
 
-        // --- Dash input ---
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
@@ -65,24 +65,25 @@ public class PlayerController : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
-
-        // ✅ Tell Animator we're dashing
         animator.SetBool("isDashing", true);
 
         Vector2 dashDirection = (movement.sqrMagnitude > 0.01f) ? movement : lastMoveDir;
         float startTime = Time.time;
 
+        // actual movement burst
         while (Time.time < startTime + dashDuration)
         {
             rb.MovePosition(rb.position + dashDirection.normalized * dashSpeed * Time.fixedDeltaTime);
-            yield return null;
+            yield return new WaitForFixedUpdate(); // use physics tick
         }
 
+        // stop physical dash, but keep dash animation alive a bit longer
+        yield return new WaitForSeconds(dashAnimBuffer);
+
         isDashing = false;
-        animator.SetBool("isDashing", false);  // ✅ Back to Idle/Walk
+        animator.SetBool("isDashing", false);
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
-
 }
