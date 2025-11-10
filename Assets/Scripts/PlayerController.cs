@@ -14,9 +14,10 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 12f;
     public float dashDuration = 0.3f;     // shorter movement burst
     public float dashAnimBuffer = 0.15f;  // keep dash animation alive briefly after movement
-    public float dashCooldown = 1f;
+    public float dashCooldown = 60f;
     private bool isDashing = false;
     private bool canDash = true;
+    [SerializeField] private DashUI dashUI;
 
     void Start()
     {
@@ -64,6 +65,8 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         canDash = false;
+        dashUI.StartCooldown(dashCooldown); // start UI cooldown
+
         isDashing = true;
         animator.SetBool("isDashing", true);
 
@@ -83,7 +86,14 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         animator.SetBool("isDashing", false);
 
-        yield return new WaitForSeconds(dashCooldown);
+        // wait for cooldown to finish BEFORE allowing dash again
+        float elapsed = 0f;
+        while (elapsed < dashCooldown)
+        {
+            elapsed += Time.deltaTime;
+            yield return null; // wait until next frame
+        }
+
         canDash = true;
     }
 }
