@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // --- 1. Get raw input ---
+        // --- 1. Get input ---
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
@@ -25,15 +25,20 @@ public class PlayerController : MonoBehaviour
         if (movement.sqrMagnitude > 1)
             movement.Normalize();
 
-        // --- 3. Update animator parameters ---
+        // --- 3. Update movement parameters ---
         animator.SetFloat("MoveX", movement.x);
         animator.SetFloat("MoveY", movement.y);
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
-        // --- 4. Remember last direction for idle facing ---
-        if (movement.sqrMagnitude > 0)
+        // --- 4. Record last move direction ---
+        if (movement.sqrMagnitude > 0.01f)
         {
-            lastMoveDir = movement;
+            // Snap to nearest cardinal direction (-1, 0, 1)
+            lastMoveDir = new Vector2(
+                Mathf.RoundToInt(Mathf.Clamp(movement.x, -1f, 1f)),
+                Mathf.RoundToInt(Mathf.Clamp(movement.y, -1f, 1f))
+            );
+
             animator.SetFloat("LastMoveX", lastMoveDir.x);
             animator.SetFloat("LastMoveY", lastMoveDir.y);
         }
@@ -41,7 +46,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // --- 5. Apply movement ---
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }

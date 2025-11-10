@@ -1998,7 +1998,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2042,7 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   target: {fileID: 1484890152}
-  smoothSpeed: 5
+  smoothSpeed: 10
   offset: {x: 0, y: 0, z: 0}
 --- !u!1 &649464212
 GameObject:
@@ -2873,6 +2873,10 @@ PrefabInstance:
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: moveSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5896794987442767874, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_LocalPosition.x
