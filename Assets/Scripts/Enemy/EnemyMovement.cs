@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
-{
-
+public class EnemyMovement : MonoBehaviour {
+    public EnemyScriptableObject enemyData;
     Transform player;
-    public float moveSpeed;
 
-    void Start() {
-        player = FindObjectOfType<PlayerController>().transform;
+    void Start()
+    {
+        player = FindFirstObjectByType<PlayerController>().transform;
     }
 
-    void Update() {
-        // Constant move enemy to player
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+    void Update()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemyData.MoveSpeed * Time.deltaTime);
     }
 }
