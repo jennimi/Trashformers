@@ -16,7 +16,7 @@ public class EnemyStats : MonoBehaviour
         currentHealth = enemyData.MaxHealth;
     }
 
-    public void TakeDamager(float dmg)
+    public void TakeDamage(float dmg)
     {
         currentHealth -= dmg;
 
@@ -25,9 +25,17 @@ public class EnemyStats : MonoBehaviour
             Kill();
         }
     }
-    
+
     public void Kill()
     {
         Destroy(gameObject);
     }
+
+    // public void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         TakeDamage(10);
+    //     }
+    // }
 }
