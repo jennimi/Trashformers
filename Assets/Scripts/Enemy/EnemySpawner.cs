@@ -8,30 +8,30 @@ public class EnemySpawner : MonoBehaviour
     public class Wave
     {
         public string waveName;
-        // Total number of enemies to spawn in this wave
-        public int waveQuota;
+        // Total number of kill target
+        public int killTarget;
         // Interval at which to spawn enemies
         public float spawnInterval;
-        // Number of enemies already spawned in this wave
-        public int spawnCount;
         // Number of enemy groups in this wave
         public List<EnemyGroup> enemyGroups;
+        [HideInInspector] public int killCount = 0;
     }
 
     [System.Serializable]
     public class EnemyGroup
     {
         public string enemyName;
-        // Number of enemies to spawn for this wave
-        public int enemyCount;
-        // Number of enemies of this type already spawned in this wave
-        public int spawnCount;
+        // Frequency to spawn this enemy
+        public int weight;
+        // Number of enemies spawned at once
+        public int spawnAtOnce;
         public GameObject enemy;
     }
 
     // A list of waves
     public List<Wave> waves;
     public int currentWaveCount;
+    public float waveInterval;
     Transform player;
 
     [Header("Spawner Attributes")]
@@ -39,13 +39,18 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        CalculateWaveQuota();
-        player = FindObjectOfType<PlayerController>().transform;
+        player = FindAnyObjectByType<PlayerController>().transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Check  whether a wave starts or ends
+        if(currentWaveCount < waves.Count && waves[currentWaveCount].killCount >= waves[currentWaveCount].killTarget)
+        {
+            StartCoroutine(StartNextWave());
+        }
+
         spawnTimer += Time.deltaTime;
 
         // Check time to spawn enemy
@@ -56,36 +61,64 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void CalculateWaveQuota()
+    IEnumerator StartNextWave()
     {
-        int currentWaveQuota = 0;
-        foreach (var enemyGroup in waves[currentWaveCount].enemyGroups)
+        GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in remainingEnemies)
         {
-            currentWaveQuota += enemyGroup.enemyCount;
+            Destroy(enemy);
         }
 
-        waves[currentWaveCount].waveQuota = currentWaveQuota;
-        Debug.LogWarning(currentWaveQuota);
+        yield return new WaitForSeconds(waveInterval);
+        
+        if(currentWaveCount < waves.Count - 1)
+        {
+            currentWaveCount++;
+        }
     }
-
     void SpawnEnemies()
     {
-        // Check if the minimum number of enemies in the wave have been spawned
-        if (waves[currentWaveCount].spawnCount < waves[currentWaveCount].waveQuota)
-        {
-            // Spawn each type of enemy until the quota is filled
-            foreach (var enemyGroup in waves[currentWaveCount].enemyGroups)
-            {
-                // Check if the minimum number of enemies of this type have been spawned
-                if (enemyGroup.spawnCount < enemyGroup.enemyCount)
-                {
-                    Vector2 spawnPosition = new Vector2(player.transform.position.x + Random.Range(-10f, 10f), player.transform.position.y + Random.Range(-10f, 10f));
-                    Instantiate(enemyGroup.enemy, spawnPosition, Quaternion.identity);
+        var wave = waves[currentWaveCount];
 
-                    enemyGroup.spawnCount++;
-                    waves[currentWaveCount].spawnCount++;
-                }
+        if (wave.killCount >= wave.killTarget) return;
+
+        int totalWeight = 0;
+        foreach (var group in wave.enemyGroups)
+            totalWeight += group.weight;
+
+        int randomValue = Random.Range(0, totalWeight);
+        EnemyGroup selectedGroup = null;
+
+        foreach (var group in wave.enemyGroups)
+        {
+            if (randomValue < group.weight)
+            {
+                selectedGroup = group;
+                break;
             }
+            randomValue -= group.weight;
+        }
+
+        for (int i = 0; i < selectedGroup.spawnAtOnce; i++)
+        {
+            Vector2 spawnPosition = new Vector2(player.transform.position.x + Random.Range(-10f, 10f), player.transform.position.y + Random.Range(-10f, 10f));
+            GameObject enemy = Instantiate(selectedGroup.enemy, spawnPosition, Quaternion.identity);
+
+            var enemyStats = enemy.GetComponent<EnemyStats>();
+            if (enemyStats != null)
+            {
+                enemyStats.spawner = this;
+                enemyStats.waveIndex = currentWaveCount;
+            }
+        }
+    }
+    
+    public void OnEnemyKilled(int waveIndex)
+    {
+        if (waveIndex < waves.Count)
+        {
+            waves[waveIndex].killCount++;
         }
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4690574365263497144}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
+  dashSpeed: 12
+  dashDuration: 0.3
+  dashAnimBuffer: 0.15
+  dashCooldown: 60
+  dashUI: {fileID: 0}
 --- !u!50 &8383077189512860373
 Rigidbody2D:
   serializedVersion: 5

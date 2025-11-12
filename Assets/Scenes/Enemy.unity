@@ -99000,19 +99000,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   waves:
   - waveName: Wave 1
-    waveQuota: 0
-    spawnInterval: 3
-    spawnCount: 0
+    killTarget: 10
+    spawnInterval: 2
     enemyGroups:
     - enemyName: Enemy
-      enemyCount: 5
-      spawnCount: 0
-      enemy: {fileID: 2126914978}
-    - enemyName: ' Enemy Lain'
-      enemyCount: 3
-      spawnCount: 0
+      weight: 1
+      spawnAtOnce: 1
+      enemy: {fileID: 1413029796999557950, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
+    killCount: 0
+  - waveName: Wave 2
+    killTarget: 10
+    spawnInterval: 2
+    enemyGroups:
+    - enemyName: Enemy lain
+      weight: 1
+      spawnAtOnce: 1
       enemy: {fileID: 1413029796999557950, guid: daa09262ffd7d49529953352101a67a9, type: 3}
+    killCount: 0
   currentWaveCount: 0
+  waveInterval: 4
 --- !u!1 &1417856452
 GameObject:
   m_ObjectHideFlags: 0
@@ -99763,11 +99769,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974780852}
   m_CullTransparentMesh: 1
---- !u!1 &2126914978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1413029796999557950, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-  m_PrefabInstance: {fileID: 1070649347}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1329810833673139922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99778,6 +99779,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}

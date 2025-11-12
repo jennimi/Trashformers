@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4507093540658324449}
   m_Layer: 0
   m_Name: Enemy Lain
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,3 +193,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   enemyData: {fileID: 11400000, guid: e385ca08989ff4a628cd52910fc10c46, type: 2}
+  currentMoveSpeed: 0
+  currentHealth: 0
+  currentDamage: 0
+  spawner: {fileID: 0}
+  waveIndex: 0
+  despawnDistance: 20
