@@ -99801,6 +99801,10 @@ PrefabInstance:
       propertyPath: dashCooldown
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4795915318664202073, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5896794987442767874, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_LocalScale.x
       value: 10

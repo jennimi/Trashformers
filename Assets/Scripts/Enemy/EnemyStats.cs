@@ -46,6 +46,12 @@ public class EnemyStats : MonoBehaviour
             spawner.OnEnemyKilled(waveIndex);
         }
 
+        var dropManager = GetComponent<DropRateManager>();
+        if (dropManager != null)
+        {
+            dropManager.DropItems();
+        }
+
         Destroy(gameObject);
     }
 

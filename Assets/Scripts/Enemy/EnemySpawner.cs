@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         // Check  whether a wave starts or ends
-        if(currentWaveCount < waves.Count && waves[currentWaveCount].killCount >= waves[currentWaveCount].killTarget)
+        if (currentWaveCount < waves.Count && waves[currentWaveCount].killCount >= waves[currentWaveCount].killTarget)
         {
             StartCoroutine(StartNextWave());
         }
@@ -71,8 +71,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         yield return new WaitForSeconds(waveInterval);
-        
-        if(currentWaveCount < waves.Count - 1)
+
+        if (currentWaveCount < waves.Count - 1)
         {
             currentWaveCount++;
         }
@@ -111,14 +111,35 @@ public class EnemySpawner : MonoBehaviour
                 enemyStats.spawner = this;
                 enemyStats.waveIndex = currentWaveCount;
             }
+
+            // 👇 Add XP drop assignment here
+            var dropManager = enemy.GetComponent<DropRateManager>();
+            if (dropManager != null)
+            {
+                dropManager.xpAmount = GetXPForWave(currentWaveCount);
+            }
         }
     }
-    
+
     public void OnEnemyKilled(int waveIndex)
     {
         if (waveIndex < waves.Count)
         {
             waves[waveIndex].killCount++;
+        }
+    }
+
+    int GetXPForWave(int wave)
+    {
+        switch (wave)
+        {
+            // Wave starts with the index
+            case 0: return 10;
+            case 1: return 30;
+            case 2: return 50;
+            case 3: return 70;
+            case 4: return 100;
+            default: return 10;
         }
     }
 }

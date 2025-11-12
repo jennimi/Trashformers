@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -5169669119264334808}
   - component: {fileID: -6902084061093373047}
   - component: {fileID: 4507093540658324449}
+  - component: {fileID: -6147113309001927037}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -198,4 +199,19 @@ MonoBehaviour:
   currentDamage: 0
   spawner: {fileID: 0}
   waveIndex: 0
-  despawnDistance: 10
+--- !u!114 &-6147113309001927037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413029796999557950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed690b7fefe643c1a915e7f7c5e1c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropRateManager
+  drops:
+  - name: Exp
+    item: {fileID: 5838434964602089684, guid: 8aee300a73abd4935bc1cdab268769e3, type: 3}
+    dropRate: 100
