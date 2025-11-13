@@ -18,7 +18,6 @@ public class WaveManager : MonoBehaviour
         currentWave++;
         UpdateWaveUI();
 
-        Debug.Log("Wave " + currentWave + " started!");
         OnWaveStarted?.Invoke(currentWave);
     }
 

@@ -98777,71 +98777,6 @@ RectTransform:
   m_AnchoredPosition: {x: -270, y: 214}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1070649347
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -6902084061093373047, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1413029796999557950, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1413029796999557950, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 12.52995
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10.01368
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3518118195493443711, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
 --- !u!1 &1074576990
 GameObject:
   m_ObjectHideFlags: 0
@@ -99001,24 +98936,30 @@ MonoBehaviour:
   waves:
   - waveName: Wave 1
     killTarget: 10
-    spawnInterval: 2
+    baseSpawnInterval: 3
     enemyGroups:
+    - enemyName: Enemy
+      weight: 2
+      spawnAtOnce: 2
+      enemy: {fileID: 397341923976956738, guid: dc9986223317442ada53c7c7f93ae852, type: 3}
     - enemyName: Enemy
       weight: 1
       spawnAtOnce: 1
-      enemy: {fileID: 1413029796999557950, guid: f51c3424f85b6409b9e872363e6b3681, type: 3}
+      enemy: {fileID: 8420419767940521247, guid: 7c66086fa535c459a85dedacd79aa165, type: 3}
     killCount: 0
   - waveName: Wave 2
-    killTarget: 10
-    spawnInterval: 2
+    killTarget: 15
+    baseSpawnInterval: 3
     enemyGroups:
     - enemyName: Enemy lain
       weight: 1
-      spawnAtOnce: 1
-      enemy: {fileID: 1413029796999557950, guid: daa09262ffd7d49529953352101a67a9, type: 3}
+      spawnAtOnce: 2
+      enemy: {fileID: 0}
     killCount: 0
   currentWaveCount: 0
   waveInterval: 4
+  difficultyRampRate: 0.01
+  maxDifficultyMultiplier: 3
 --- !u!1 &1417856452
 GameObject:
   m_ObjectHideFlags: 0
@@ -99888,4 +99829,3 @@ SceneRoots:
   - {fileID: 1713005405}
   - {fileID: 1074576993}
   - {fileID: 1325199327}
-  - {fileID: 1070649347}

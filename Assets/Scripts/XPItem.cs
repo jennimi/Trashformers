@@ -8,8 +8,6 @@ public class XPItem : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            // add XP to player stats here
-            Debug.Log($"Player gained {amount} XP!");
             Destroy(gameObject);
         }
     }

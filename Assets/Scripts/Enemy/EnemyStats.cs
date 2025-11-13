@@ -12,7 +12,9 @@ public class EnemyStats : MonoBehaviour
     public float currentHealth;
     [HideInInspector]
     public float currentDamage;
+    [HideInInspector]    
     public EnemySpawner spawner;
+    [HideInInspector]
     public int waveIndex;
     Transform player;
 
@@ -38,7 +40,6 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-
     public void Kill()
     {
         if (spawner != null)
@@ -55,15 +56,11 @@ public class EnemyStats : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Update()
+    void Update()
     {
-        if (player == null) return;
-
-        // Debug damage trigger
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
-            EnemyStats enemy = GetComponent<EnemyStats>();
-            enemy.TakeDamage(5);
+            TakeDamage(10);
         }
     }
 }

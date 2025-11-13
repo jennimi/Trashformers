@@ -21,8 +21,6 @@ public class DashUI : MonoBehaviour
         cooldownRemaining = duration;
         coolingDown = true;
         cooldownImage.fillAmount = 0f;
-
-        Debug.Log("💨 Dash | Cooldown Started: " + duration + " seconds");
     }
 
     void Update()

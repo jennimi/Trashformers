@@ -8,12 +8,9 @@ public class EnemySpawner : MonoBehaviour
     public class Wave
     {
         public string waveName;
-        // Total number of kill target
-        public int killTarget;
-        // Interval at which to spawn enemies
-        public float spawnInterval;
-        // Number of enemy groups in this wave
-        public List<EnemyGroup> enemyGroups;
+        public int killTarget;                   // Total number of enemies to kill in this wave
+        public float baseSpawnInterval;          // Base interval for spawning enemies
+        public List<EnemyGroup> enemyGroups;     // Enemy group definitions
         [HideInInspector] public int killCount = 0;
     }
 
@@ -21,68 +18,114 @@ public class EnemySpawner : MonoBehaviour
     public class EnemyGroup
     {
         public string enemyName;
-        // Frequency to spawn this enemy
-        public int weight;
-        // Number of enemies spawned at once
-        public int spawnAtOnce;
+        public int weight;                       // Spawn probability weight
+        public int spawnAtOnce;                  // How many enemies spawn together
         public GameObject enemy;
     }
 
-    // A list of waves
+    [Header("Waves Setup")]
     public List<Wave> waves;
     public int currentWaveCount;
-    public float waveInterval;
-    Transform player;
+    public float waveInterval = 3f;
+    private Transform player;
+    private List<GameObject> activeEnemies = new List<GameObject>();
 
     [Header("Spawner Attributes")]
-    float spawnTimer;
+    private float spawnTimer;
+    private float waveTime;                      // Time spent in the current wave
+
+    [Header("Dynamic Difficulty")]
+    public float difficultyRampRate = 0.003f;     // How quickly difficulty scales over time
+    public float maxDifficultyMultiplier = 3f;   // Cap the difficulty multiplier
+
+    bool IsInCameraView(Camera cam, Vector3 worldPosition)
+    {
+        Vector3 viewportPos = cam.WorldToViewportPoint(worldPosition);
+
+        if (viewportPos.z < 0)
+            return false;
+
+        return viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1;
+    }
+
 
     void Start()
     {
         player = FindAnyObjectByType<PlayerController>().transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Check  whether a wave starts or ends
-        if (currentWaveCount < waves.Count && waves[currentWaveCount].killCount >= waves[currentWaveCount].killTarget)
+        if (currentWaveCount >= waves.Count) return;
+
+        Wave currentWave = waves[currentWaveCount];
+
+        // Check wave completion
+        if (currentWave.killCount >= currentWave.killTarget)
         {
             StartCoroutine(StartNextWave());
+            return;
         }
 
+        // Track time spent in current wave
+        waveTime += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // Check time to spawn enemy
-        if (spawnTimer >= waves[currentWaveCount].spawnInterval)
+        // Calculate difficulty multiplier based on elapsed time
+        float difficultyMultiplier = Mathf.Min(1f + waveTime * difficultyRampRate, maxDifficultyMultiplier);
+
+        // Gradually reduce spawn interval (faster spawns)
+        float adjustedSpawnInterval = currentWave.baseSpawnInterval / difficultyMultiplier;
+
+        // Check if it's time to spawn
+        if (spawnTimer >= adjustedSpawnInterval)
         {
             spawnTimer = 0f;
-            SpawnEnemies();
+            SpawnEnemies(difficultyMultiplier);
         }
     }
 
     IEnumerator StartNextWave()
     {
-        GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        var remainingEnemies = new List<GameObject>(activeEnemies);
+
+        Camera cam = Camera.main;
 
         foreach (GameObject enemy in remainingEnemies)
         {
+            // Drop XP only for enemies visible in camera
+            if (IsInCameraView(cam, enemy.transform.position))
+            {
+                var dropManager = enemy.GetComponent<DropRateManager>();
+                if (dropManager != null)
+                {
+                    dropManager.DropItems();
+                }
+            }
+
             Destroy(enemy);
         }
 
+        activeEnemies.Clear();
+
+        // Short break between waves
         yield return new WaitForSeconds(waveInterval);
 
+        // 🔁 Start next wave
         if (currentWaveCount < waves.Count - 1)
         {
             currentWaveCount++;
+            waveTime = 0f; // reset wave timer
+            spawnTimer = 0f;
         }
     }
-    void SpawnEnemies()
+
+    void SpawnEnemies(float difficultyMultiplier)
     {
         var wave = waves[currentWaveCount];
-
         if (wave.killCount >= wave.killTarget) return;
 
+        // Weighted random enemy selection
         int totalWeight = 0;
         foreach (var group in wave.enemyGroups)
             totalWeight += group.weight;
@@ -100,11 +143,22 @@ public class EnemySpawner : MonoBehaviour
             randomValue -= group.weight;
         }
 
-        for (int i = 0; i < selectedGroup.spawnAtOnce; i++)
-        {
-            Vector2 spawnPosition = new Vector2(player.transform.position.x + Random.Range(-10f, 10f), player.transform.position.y + Random.Range(-10f, 10f));
-            GameObject enemy = Instantiate(selectedGroup.enemy, spawnPosition, Quaternion.identity);
+        if (selectedGroup == null) return;
 
+        // Scale spawn count dynamically
+        int scaledSpawnCount = Mathf.RoundToInt(selectedGroup.spawnAtOnce * difficultyMultiplier);
+
+        for (int i = 0; i < scaledSpawnCount; i++)
+        {
+            Vector2 spawnPosition = new Vector2(
+                player.transform.position.x + Random.Range(-10f, 10f),
+                player.transform.position.y + Random.Range(-10f, 10f)
+            );
+
+            GameObject enemy = Instantiate(selectedGroup.enemy, spawnPosition, Quaternion.identity);
+            activeEnemies.Add(enemy);
+
+            // 🔗 Assign wave and XP
             var enemyStats = enemy.GetComponent<EnemyStats>();
             if (enemyStats != null)
             {
@@ -112,7 +166,6 @@ public class EnemySpawner : MonoBehaviour
                 enemyStats.waveIndex = currentWaveCount;
             }
 
-            // 👇 Add XP drop assignment here
             var dropManager = enemy.GetComponent<DropRateManager>();
             if (dropManager != null)
             {
@@ -121,19 +174,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    // Called when enemy dies
     public void OnEnemyKilled(int waveIndex)
     {
         if (waveIndex < waves.Count)
         {
             waves[waveIndex].killCount++;
         }
+        activeEnemies.RemoveAll(e => e == null);
     }
 
     int GetXPForWave(int wave)
     {
         switch (wave)
         {
-            // Wave starts with the index
             case 0: return 10;
             case 1: return 30;
             case 2: return 50;
