@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2879389207066738045}
   - component: {fileID: -6141704651278601645}
   - component: {fileID: -2907482302896366000}
+  - component: {fileID: -6715627064532108772}
   m_Layer: 0
   m_Name: EnemySkeleton
   m_TagString: Enemy
@@ -216,3 +217,16 @@ MonoBehaviour:
     item: {fileID: 5838434964602089684, guid: 8aee300a73abd4935bc1cdab268769e3, type: 3}
     dropRate: 100
   xpAmount: 10
+--- !u!114 &-6715627064532108772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210951786296880765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5f06835af55493388afdf18effccd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTouchDamage
+  contactDamage: 10

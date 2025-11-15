@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
-    private Vector2 lastMoveDir;
+    public Vector2 lastMoveDir { get; private set; }
 
     [Header("Dash Settings")]
     public float dashDuration = 0.3f;     // shorter movement burst

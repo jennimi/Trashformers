@@ -1,9 +1,22 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyStats : MonoBehaviour
 {
     public EnemyScriptableObject enemyData;
+
+    public static List<EnemyStats> AllEnemies = new List<EnemyStats>();
+
+    void OnEnable()
+    {
+        AllEnemies.Add(this);
+    }
+
+    void OnDisable()
+    {
+        AllEnemies.Remove(this);
+    }
 
     // Current Stats
     [HideInInspector]
@@ -12,7 +25,7 @@ public class EnemyStats : MonoBehaviour
     public float currentHealth;
     [HideInInspector]
     public float currentDamage;
-    [HideInInspector]    
+    [HideInInspector]
     public EnemySpawner spawner;
     [HideInInspector]
     public int waveIndex;
@@ -20,9 +33,13 @@ public class EnemyStats : MonoBehaviour
 
     void Awake()
     {
-        currentDamage = enemyData.Damage;
+        PlayerStats player = FindAnyObjectByType<PlayerStats>();
+
+        int level = player.level;
+
+        currentDamage = enemyData.Damage * (1 + (level - 1) * 0.1f);    // +10% per level
         currentMoveSpeed = enemyData.MoveSpeed;
-        currentHealth = enemyData.MaxHealth;
+        currentHealth = enemyData.MaxHealth * (1 + (level - 1) * 0.2f); // +20% per level
     }
 
     void Start()
@@ -54,13 +71,5 @@ public class EnemyStats : MonoBehaviour
         }
 
         Destroy(gameObject);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-        }
     }
 }

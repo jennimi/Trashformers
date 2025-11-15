@@ -31,6 +31,13 @@ public class PlayerStats : MonoBehaviour
 
     public List<LevelRange> levelRanges;
 
+    public bool isInvincible = false;
+    public float damageCooldown = 1f; // 1 second of invincibility
+
+    public float attackCooldown = 3f;
+    public bool canAttack = true;
+
+
     void Awake()
     {
         currentHealth = playerData.MaxHealth;
@@ -89,4 +96,35 @@ public class PlayerStats : MonoBehaviour
 
         Debug.Log($"New Stats → HP: {currentHealth}, DMG: {currentDamage}");
     }
+
+    public void TakeDamage(float amount)
+    {
+        if (isInvincible)
+            return; // ignore damage
+
+        currentHealth -= amount;
+        Debug.Log($"Player took {amount} damage. HP = {currentHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
+        StartCoroutine(DamageCooldownRoutine());
+    }
+
+
+    void Die()
+    {
+        Debug.Log("Player died!");
+    }
+
+    private IEnumerator DamageCooldownRoutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(damageCooldown);
+        isInvincible = false;
+    }
+
 }

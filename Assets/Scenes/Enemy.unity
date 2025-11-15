@@ -99718,6 +99718,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3602004688265924529, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 1484890152}
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -99813,6 +99817,10 @@ PrefabInstance:
     - target: {fileID: 8383077189512860373, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Interpolate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464343517064733546, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: attackCooldown
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

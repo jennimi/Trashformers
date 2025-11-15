@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8383077189512860373}
   - component: {fileID: 4690574365263497144}
   - component: {fileID: 8464343517064733546}
+  - component: {fileID: -3602004688265924529}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -143,8 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4baa4615abd174e40a555a78d655a621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 20
-  dashSpeed: 12
   dashDuration: 0.3
   dashAnimBuffer: 0.15
   dashCooldown: 60
@@ -211,12 +210,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   playerData: {fileID: 11400000, guid: 8fa21c26e82d043238bdc31ddc8fa8b3, type: 2}
+  currentHealth: 0
+  currentDamage: 0
+  currentMoveSpeed: 0
+  currentDashSpeed: 0
   experience: 0
   level: 1
   experienceCap: 0
   healthIncreasePerLevel: 25
   damageIncreasePerLevel: 5
   MoveSpeedIncreasePerLevel: 0.5
+  DashSpeedIncreasePerLevel: 0.5
   levelRanges:
   - startLevel: 1
     endLevel: 3
@@ -242,3 +246,21 @@ MonoBehaviour:
   - startLevel: 33
     endLevel: 50
     experienceCapIncrease: 1100
+  isInvincible: 0
+  damageCooldown: 1
+  attackCooldown: 0.3
+  canAttack: 1
+--- !u!114 &-3602004688265924529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060869220229691158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cdfd6a4fe6d44e2974d1ca4f3d288e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAutoAttack
+  projectilePrefab: {fileID: 7577857958888068951, guid: 40d853a27ad9d44ffa9dba62af9aeb36, type: 3}
+  firePoint: {fileID: 0}
