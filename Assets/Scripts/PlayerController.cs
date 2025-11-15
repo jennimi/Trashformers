@@ -3,15 +3,13 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed = 5f;
+    private PlayerStats stats;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 movement;
     private Vector2 lastMoveDir;
 
     [Header("Dash Settings")]
-    public float dashSpeed = 12f;
     public float dashDuration = 0.3f;     // shorter movement burst
     public float dashAnimBuffer = 0.15f;  // keep dash animation alive briefly after movement
     public float dashCooldown = 60f;
@@ -23,6 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        stats = GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -59,7 +58,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (isDashing) return;
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * stats.currentMoveSpeed * Time.fixedDeltaTime);
     }
 
     private IEnumerator Dash()
@@ -76,7 +75,8 @@ public class PlayerController : MonoBehaviour
         // actual movement burst
         while (Time.time < startTime + dashDuration)
         {
-            rb.MovePosition(rb.position + dashDirection.normalized * dashSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + dashDirection.normalized * stats.currentDashSpeed * Time.fixedDeltaTime);
+
             yield return new WaitForFixedUpdate(); // use physics tick
         }
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4599697178837005718}
   - component: {fileID: 8383077189512860373}
   - component: {fileID: 4690574365263497144}
+  - component: {fileID: 8464343517064733546}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -142,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4baa4615abd174e40a555a78d655a621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
+  moveSpeed: 20
   dashSpeed: 12
   dashDuration: 0.3
   dashAnimBuffer: 0.15
@@ -197,3 +198,47 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8464343517064733546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060869220229691158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85bcaedb83cd54b008ecfe91272ff8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  playerData: {fileID: 11400000, guid: 8fa21c26e82d043238bdc31ddc8fa8b3, type: 2}
+  experience: 0
+  level: 1
+  experienceCap: 0
+  healthIncreasePerLevel: 25
+  damageIncreasePerLevel: 5
+  MoveSpeedIncreasePerLevel: 0.5
+  levelRanges:
+  - startLevel: 1
+    endLevel: 3
+    experienceCapIncrease: 150
+  - startLevel: 4
+    endLevel: 6
+    experienceCapIncrease: 300
+  - startLevel: 7
+    endLevel: 9
+    experienceCapIncrease: 500
+  - startLevel: 10
+    endLevel: 15
+    experienceCapIncrease: 700
+  - startLevel: 16
+    endLevel: 20
+    experienceCapIncrease: 900
+  - startLevel: 21
+    endLevel: 26
+    experienceCapIncrease: 1100
+  - startLevel: 27
+    endLevel: 32
+    experienceCapIncrease: 1300
+  - startLevel: 33
+    endLevel: 50
+    experienceCapIncrease: 1100

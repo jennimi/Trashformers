@@ -98936,7 +98936,7 @@ MonoBehaviour:
   waves:
   - waveName: Wave 1
     killTarget: 10
-    baseSpawnInterval: 3
+    baseSpawnInterval: 4
     enemyGroups:
     - enemyName: Enemy
       weight: 2
@@ -98948,17 +98948,17 @@ MonoBehaviour:
       enemy: {fileID: 8420419767940521247, guid: 7c66086fa535c459a85dedacd79aa165, type: 3}
     killCount: 0
   - waveName: Wave 2
-    killTarget: 15
-    baseSpawnInterval: 3
+    killTarget: 100
+    baseSpawnInterval: 4
     enemyGroups:
     - enemyName: Enemy lain
       weight: 1
       spawnAtOnce: 2
-      enemy: {fileID: 0}
+      enemy: {fileID: 8210951786296880765, guid: 9e4ccb90a2a8d4a0d9b2e04de1bec235, type: 3}
     killCount: 0
   currentWaveCount: 0
-  waveInterval: 4
-  difficultyRampRate: 0.01
+  waveInterval: 3
+  difficultyRampRate: 0.003
   maxDifficultyMultiplier: 3
 --- !u!1 &1417856452
 GameObject:
@@ -99736,7 +99736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: moveSpeed
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: dashCooldown

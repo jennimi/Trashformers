@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     {
         public string waveName;
         public int killTarget;                   // Total number of enemies to kill in this wave
-        public float baseSpawnInterval;          // Base interval for spawning enemies
+        public float baseSpawnInterval = 4;          // Base interval for spawning enemies
         public List<EnemyGroup> enemyGroups;     // Enemy group definitions
         [HideInInspector] public int killCount = 0;
     }
@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     {
         public string enemyName;
         public int weight;                       // Spawn probability weight
-        public int spawnAtOnce;                  // How many enemies spawn together
+        public int spawnAtOnce = 2;                  // How many enemies spawn together
         public GameObject enemy;
     }
 
@@ -93,7 +93,8 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (GameObject enemy in remainingEnemies)
         {
-            // Drop XP only for enemies visible in camera
+            if (enemy == null) continue;   // <--- prevents MissingReference
+
             if (IsInCameraView(cam, enemy.transform.position))
             {
                 var dropManager = enemy.GetComponent<DropRateManager>();
@@ -105,6 +106,7 @@ public class EnemySpawner : MonoBehaviour
 
             Destroy(enemy);
         }
+
 
         activeEnemies.Clear();
 

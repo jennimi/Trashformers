@@ -58,7 +58,7 @@ public class EnemyStats : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(10);
         }
