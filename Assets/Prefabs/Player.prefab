@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -3602004688265924529}
   - component: {fileID: 8225147541219503702}
   - component: {fileID: -2635012944950739480}
+  - component: {fileID: 5128463422893137798}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5903488652781262050, guid: 684e6ffa2e7854d9899c3c7951c103e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -280,8 +281,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BouncingSkillCaster
   projectilePrefab: {fileID: 224765257965029836, guid: 46f630d8688f14fa288bdcd7a0d5df94, type: 3}
   projectileCount: 3
-  spreadAngle: 45
   damage: 5
+  cooldown: 4
 --- !u!114 &-2635012944950739480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,5 +295,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380c6096d1f6d44a797a94008538cc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
-  skillCaster: {fileID: 8225147541219503702}
-  skillCooldown: 2
+  bounceCaster: {fileID: 8225147541219503702}
+  incenseCaster: {fileID: 5128463422893137798}
+--- !u!114 &5128463422893137798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060869220229691158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72773a1d45c97491d926368ecfc564af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IncenseSkillCaster
+  aoePrefab: {fileID: 7815579793223397734, guid: 9e584b68b53324b71a493b58f2e7542e, type: 3}
+  cooldown: 3

@@ -1,13 +1,18 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BouncingSkillCaster : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public int projectileCount = 3;
     public float damage = 5f;
+    private bool canCast = true;
+    public float cooldown = 4f;
 
     public void Cast(Vector3 origin)
     {
+        if (!canCast) return;
         for (int i = 0; i < projectileCount; i++)
         {
             // Random angle 0–360 degrees
@@ -23,6 +28,13 @@ public class BouncingSkillCaster : MonoBehaviour
             BouncingSkill proj = projObj.GetComponent<BouncingSkill>();
             proj.Initialize(dir, damage);
         }
+        StartCoroutine(CooldownRoutine());
     }
 
+    private IEnumerator CooldownRoutine()
+    {
+        canCast = false;
+        yield return new WaitForSeconds(cooldown);
+        canCast = true;
+    }
 }
