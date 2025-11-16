@@ -98545,6 +98545,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -98641,6 +98642,18 @@ MonoBehaviour:
   target: {fileID: 1484890152}
   smoothSpeed: 10
   offset: {x: 0, y: 0, z: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034abdea6bdc0439ab6ed7cc52db137a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraBounds
 --- !u!1 &649464212
 GameObject:
   m_ObjectHideFlags: 0
@@ -98887,6 +98900,7 @@ Transform:
   m_Children:
   - {fileID: 1637375457}
   - {fileID: 1330603217}
+  - {fileID: 1944895144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1330603216
@@ -99577,6 +99591,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820596520}
   m_CullTransparentMesh: 1
+--- !u!1 &1944895143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1944895144}
+  m_Layer: 0
+  m_Name: PlayerSkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1944895144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944895143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1325199327}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1974780852
 GameObject:
   m_ObjectHideFlags: 0
@@ -99722,6 +99767,10 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1484890152}
+    - target: {fileID: -2635012944950739480, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: skillCooldown
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -99805,6 +99854,10 @@ PrefabInstance:
     - target: {fileID: 5896794987442767874, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: projectileCount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8383077189512860373, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_BodyType

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 4690574365263497144}
   - component: {fileID: 8464343517064733546}
   - component: {fileID: -3602004688265924529}
+  - component: {fileID: 8225147541219503702}
+  - component: {fileID: -2635012944950739480}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -264,3 +266,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAutoAttack
   projectilePrefab: {fileID: 7577857958888068951, guid: 40d853a27ad9d44ffa9dba62af9aeb36, type: 3}
   firePoint: {fileID: 0}
+--- !u!114 &8225147541219503702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060869220229691158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85916d883f96457ea430729ea7504f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BouncingSkillCaster
+  projectilePrefab: {fileID: 224765257965029836, guid: 46f630d8688f14fa288bdcd7a0d5df94, type: 3}
+  projectileCount: 3
+  spreadAngle: 45
+  damage: 5
+--- !u!114 &-2635012944950739480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060869220229691158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 380c6096d1f6d44a797a94008538cc9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillController
+  skillCaster: {fileID: 8225147541219503702}
+  skillCooldown: 2
