@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: -6141704651278601645}
   - component: {fileID: -2907482302896366000}
   - component: {fileID: -6715627064532108772}
+  - component: {fileID: 6749384244747472897}
   m_Layer: 0
-  m_Name: EnemySkeleton
+  m_Name: Enemy_Cup
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8322996921219716775, guid: 4b70adac23eb148978550b5e119466fd, type: 3}
+  m_Sprite: {fileID: -1398551646880203641, guid: e44df49dd24fb4c40b10565cd8a8bf0e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -134,7 +135,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.14, y: 0.2}
+    oldSize: {x: 0.25, y: 0.29}
     newSize: {x: 0.14, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -230,3 +231,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTouchDamage
   contactDamage: 10
+--- !u!95 &6749384244747472897
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210951786296880765}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7a605aa7b04f94a98ab16b63692c8ca4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

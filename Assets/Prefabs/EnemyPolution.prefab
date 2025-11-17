@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6569758649129542671}
   - component: {fileID: -7428587518399751478}
   - component: {fileID: 9186843356934220552}
+  - component: {fileID: -3564746846647612657}
   m_Layer: 0
   m_Name: EnemyPolution
   m_TagString: Enemy
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4465610861778227266, guid: e6b9052d17e414b088d52a15ec8cfed3, type: 3}
+  m_Sprite: {fileID: -5268542635369919342, guid: 9ceedb8af1eeb4096b604df058ef6c35, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -134,7 +135,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.22, y: 0.28}
+    oldSize: {x: 0.22, y: 0.27}
     newSize: {x: 0.22, y: 0.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -230,3 +231,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTouchDamage
   contactDamage: 10
+--- !u!95 &-3564746846647612657
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397341923976956738}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c440fafcb4104df3b020b965c3d6dea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
