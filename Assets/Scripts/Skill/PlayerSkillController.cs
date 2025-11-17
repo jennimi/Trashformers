@@ -4,6 +4,7 @@ public class PlayerSkillController : MonoBehaviour
 {
     public BouncingSkillCaster bounceCaster;
     public IncenseSkillCaster incenseCaster;
+    public SmiteSkillCaster smiteCaster;
 
     void Update()
     {
@@ -11,6 +12,9 @@ public class PlayerSkillController : MonoBehaviour
         // bounceCaster.Cast(transform.position);
 
         // Auto-cast AOE incense
-        incenseCaster.Cast();
+        // incenseCaster.Cast();
+
+        // Auto-cast AOE Smite
+        smiteCaster.CastRandomEnemy();
     }
 }
