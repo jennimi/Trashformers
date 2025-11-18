@@ -11,16 +11,37 @@ public class DashUI : MonoBehaviour
 
     void Start()
     {
-        // Dash is ready at start → image full
-        cooldownImage.fillAmount = 1f;
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = 1f; // ready at start
     }
 
+    // Called externally (UIManager.StartDashCooldown)
     public void StartCooldown(float duration)
     {
+        if (duration <= 0f)
+        {
+            // instantly ready
+            if (cooldownImage != null) cooldownImage.fillAmount = 1f;
+            coolingDown = false;
+            return;
+        }
+
         cooldownTime = duration;
         cooldownRemaining = duration;
         coolingDown = true;
-        cooldownImage.fillAmount = 0f;
+
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = 0f;
+    }
+
+    // Optional: call to forcibly reset UI to ready state
+    public void ResetUI()
+    {
+        coolingDown = false;
+        cooldownRemaining = 0f;
+        cooldownTime = 0f;
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = 1f;
     }
 
     void Update()
@@ -28,13 +49,14 @@ public class DashUI : MonoBehaviour
         if (!coolingDown) return;
 
         cooldownRemaining -= Time.deltaTime;
-        // Fill amount increases as cooldown progresses
-        cooldownImage.fillAmount = 1f - (cooldownRemaining / cooldownTime);
+        if (cooldownTime > 0f && cooldownImage != null)
+            cooldownImage.fillAmount = 1f - (cooldownRemaining / cooldownTime);
 
         if (cooldownRemaining <= 0f)
         {
             coolingDown = false;
-            cooldownImage.fillAmount = 1f; // full when dash is ready
+            if (cooldownImage != null)
+                cooldownImage.fillAmount = 1f; // full when dash is ready
         }
     }
 }

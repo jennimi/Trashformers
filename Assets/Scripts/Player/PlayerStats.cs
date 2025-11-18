@@ -49,14 +49,25 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         experienceCap = levelRanges[0].experienceCapIncrease;
+
+        // initialize UI
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth);
+            UIManager.Instance.UpdateEXP(experience, experienceCap);
+            UIManager.Instance.UpdateLevel(level);
+        }
     }
 
     public void IncreaseExperience(int amount)
     {
         experience += amount;
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateEXP(experience, experienceCap);
 
         LevelUpChecker();
     }
+
 
     void LevelUpChecker()
     {
@@ -77,6 +88,14 @@ public class PlayerStats : MonoBehaviour
 
             // 🔥 Increase stats here
             IncreaseStatsOnLevelUp();
+
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateLevel(level);
+                UIManager.Instance.UpdateEXP(experience, experienceCap);
+                UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth); // if HP changed
+            }
+
         }
     }
 
@@ -103,6 +122,9 @@ public class PlayerStats : MonoBehaviour
             return; // ignore damage
 
         currentHealth -= amount;
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth);
+            
         Debug.Log($"Player took {amount} damage. HP = {currentHealth}");
 
         if (currentHealth <= 0)
