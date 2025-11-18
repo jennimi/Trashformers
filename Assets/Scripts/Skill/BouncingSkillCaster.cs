@@ -1,19 +1,37 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class BouncingSkillCaster : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public int projectileCount = 3;
-    public float damage = 5f;
+
+    public SkillDefinition skillDefinition;
+
+    [Header("Base Stats")]
+    public int baseProjectileCount = 3;
+    public int projectilesPerLevel = 1;
+
+    public float baseDamage = 5f;
+    public float damagePerLevel = 2f;
+
+    public float baseCooldown = 4f;
+    public float cooldownReduction = 0.25f;
     private bool canCast = true;
-    public float cooldown = 4f;
+
+    public int level = 1;
+
+    [HideInInspector] public int projectileCount;
+    [HideInInspector] public float damage;
+    [HideInInspector] public float cooldown;
 
     public void Cast(Vector3 origin)
     {
         if (!canCast) return;
-        for (int i = 0; i < projectileCount; i++)
+
+        int count = GetProjectileCount();
+        float dmg = GetDamage();
+
+        for (int i = 0; i < count; i++)
         {
             // Random angle 0–360 degrees
             float angle = Random.Range(0f, 360f);
@@ -21,20 +39,27 @@ public class BouncingSkillCaster : MonoBehaviour
             // Convert angle to direction
             Vector2 dir = Quaternion.Euler(0, 0, angle) * Vector2.right;
 
-            // Spawn projectile
             GameObject projObj = Instantiate(projectilePrefab, origin, Quaternion.identity);
 
-            // Initialize bouncing projectile
             BouncingSkill proj = projObj.GetComponent<BouncingSkill>();
-            proj.Initialize(dir, damage);
+            proj.Initialize(dir, dmg);
         }
+
         StartCoroutine(CooldownRoutine());
     }
+
+    private float GetDamage() => baseDamage + (level - 1) * damagePerLevel;
+    private int GetProjectileCount() => baseProjectileCount + (level - 1) * projectilesPerLevel;
 
     private IEnumerator CooldownRoutine()
     {
         canCast = false;
         yield return new WaitForSeconds(cooldown);
         canCast = true;
+    }
+
+    public void LevelUp()
+    {
+        level++;
     }
 }

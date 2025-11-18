@@ -77,6 +77,7 @@ public class PlayerStats : MonoBehaviour
 
             // 🔥 Increase stats here
             IncreaseStatsOnLevelUp();
+            FindAnyObjectByType<SkillUIManager>().OpenSkillUI();
         }
     }
 

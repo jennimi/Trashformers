@@ -5,13 +5,10 @@ public class BouncingSkill : MonoBehaviour
     public float speed = 10f;
     public float damage = 5f;
 
-    public float lifetime = 5f;    // ← projectile exists for 5 seconds
+    public float lifetime = 5f;
     private float timer = 0f;
 
     private Vector2 direction;
-
-    private Vector2 minBound;
-    private Vector2 maxBound;
 
     public void Initialize(Vector2 dir, float dmg)
     {
@@ -27,7 +24,7 @@ public class BouncingSkill : MonoBehaviour
 
         Move();
         StayInsideCamera(min, max);
-        // Lifetime countdown
+
         timer += Time.deltaTime;
         if (timer >= lifetime)
             Destroy(gameObject);
@@ -36,10 +33,9 @@ public class BouncingSkill : MonoBehaviour
     void StayInsideCamera(Vector2 min, Vector2 max)
     {
         Vector2 pos = transform.position;
-
         float edgeBuffer = 0.1f;
 
-        // Bounce Left/Right
+        // Bounce X
         if (pos.x < min.x + edgeBuffer)
         {
             pos.x = min.x + edgeBuffer;
@@ -51,7 +47,7 @@ public class BouncingSkill : MonoBehaviour
             direction.x *= -1;
         }
 
-        // Bounce Top/Bottom
+        // Bounce Y
         if (pos.y < min.y + edgeBuffer)
         {
             pos.y = min.y + edgeBuffer;
@@ -76,9 +72,7 @@ public class BouncingSkill : MonoBehaviour
         if (col.TryGetComponent(out EnemyStats enemy))
         {
             enemy.TakeDamage(damage);
-
-            // Bounce back when hitting enemy
-            direction = -direction;
+            direction = -direction; // bounce off enemy
         }
     }
 }

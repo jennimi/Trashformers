@@ -1,25 +1,40 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class IncenseSkillCaster : MonoBehaviour
 {
     public GameObject aoePrefab;
-    public float cooldown = 2f;
+
+    public SkillDefinition skillDefinition;
+
+    [Header("Skill Stats")]
+    public float baseDamage = 5f;
+    public float damagePerLevel = 2f;
+    public int level = 1;
+
     private bool canCast = true;
+
+    [HideInInspector] public float damagePerSecond;
 
     public void Cast()
     {
         if (!canCast) return;
 
-        Instantiate(aoePrefab, transform.position, Quaternion.identity);
-        StartCoroutine(CooldownRoutine());
+        GameObject incenseObj = Instantiate(aoePrefab, transform.position, Quaternion.identity);
+
+        // Pass level-scaled stats to the incense effect
+        IncenseSkill incense = incenseObj.GetComponent<IncenseSkill>();
+        incense.damagePerSecond = GetDamage();
     }
 
-    private IEnumerator CooldownRoutine()
+    public float GetDamage()
     {
-        canCast = false;
-        yield return new WaitForSeconds(cooldown);
-        canCast = true;
+        return baseDamage + (level - 1) * damagePerLevel;
+    }
+
+    // Call this when player upgrades the skill
+    public void LevelUp()
+    {
+        level++;
     }
 }

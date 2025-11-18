@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class IncenseSkill : MonoBehaviour
 {
-    public float damagePerSecond = 5f;
-    public float duration = 5f;
+    [HideInInspector] public float damagePerSecond;
 
     private Transform player;
-    private float timer;
 
     private void Start()
     {
@@ -15,13 +13,8 @@ public class IncenseSkill : MonoBehaviour
 
     private void Update()
     {
-        // Follow the player
+        // Follow player
         transform.position = player.position;
-
-        // Lifetime
-        timer += Time.deltaTime;
-        if (timer >= duration)
-            Destroy(gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D col)
