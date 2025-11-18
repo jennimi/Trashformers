@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c98b67e0ec6c428082c776021178e02, type: 3}
+  m_Name: FoodWaste
+  m_EditorClassIdentifier: Assembly-CSharp::ItemType
+  name: FoodWaste
+  prefabs:
+  - {fileID: 6212539455777347876, guid: fdcb18d66eb8b44899f3a9133b18a60a, type: 3}
+  - {fileID: 8550169487780519684, guid: 4125e2d42a79449e397143f4b15eafa7, type: 3}
+  - {fileID: 810130293680484594, guid: d8f268ffef3654ce4855451c0f74bef2, type: 3}
+  - {fileID: 4416302879563379470, guid: f1c3732fdeed24e0888d2f276ab54215, type: 3}
+  - {fileID: 3228962356572401066, guid: cab0983bcf07a4e37817c3024ff5ff29, type: 3}
+  - {fileID: 8661265952775849610, guid: ccd7f0225d5444a99b21dd071640c286, type: 3}

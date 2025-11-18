@@ -4,7 +4,8 @@ public class TrashCan : MonoBehaviour
 {
     public TrashType acceptedType;        
     public WaveManager waveManager; 
-    public PlayerStorageController ui;  // Drag in Inspector
+    public PlayerStorageUI ui;  // Drag in Inspector
+
     float deliverCooldown = 0.9f;
     float deliverTimer = 0f;
 
@@ -22,12 +23,12 @@ public class TrashCan : MonoBehaviour
         PlayerStorage storage = other.GetComponent<PlayerStorage>();
 
         if (storage == null) return;
-        if (storage.storage.Count == 0) return;
+        if (storage.items.Count == 0) return;
 
-        if (storage.storage[0] == acceptedType)
+        if (storage.items[0].type == acceptedType)
         {
-            storage.RemoveFirstTrash();
-            FindObjectOfType<PlayerStorageController>().RefreshUI();
+            TrashType type = storage.RemoveFirstTrash();
+
             waveManager.ProgressWave();
 
             deliverTimer = deliverCooldown;

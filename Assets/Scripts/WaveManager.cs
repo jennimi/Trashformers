@@ -1,34 +1,88 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System; 
+using System;
+using System.Collections.Generic;
+using System.Linq; // needed for OrderBy
+
 
 public class WaveManager : MonoBehaviour
 {
+    public List<TrashType> allTypes;
+    public List<TrashType> allowedTypes = new List<TrashType>();
+    public Dictionary<TrashType, int> recycleCounts = new Dictionary<TrashType, int>();
+    public int requiredAmountToRecyclePerType = 10;
+
     public int currentWaveProgress = 0;
-    public int currentWaveLimit = 10;
-
+    public int currentWaveLimit = 0;
     public int currentWave = 0;
-    public TMP_Text waveText;
 
+    public TMP_Text waveText;
     public Slider waveProgressBar;
 
     public event Action<int> OnWaveStarted;
 
     private void Start()
     {
+        // instantiating data for first wave
         currentWave = 1;
+        updateAllowedTypes();
+        resetWaveProgress();
+
+        Debug.Log("WAVE STARTING");
+        foreach (TrashType type in allowedTypes)
+        {
+            Debug.Log("Allowed trash type: " + type.name);
+        }
+
+        
         UpdateWaveUI();
         UpdateWaveBar();
     }
 
     public void NextWave()
     {
-        if (currentWave >= 6) return;
+        if (currentWave >= 6) return; // whats this for
+
+        // change variables for new wave here
         currentWave++;
+        updateAllowedTypes();
+        resetWaveProgress();
+
         UpdateWaveBar(forceSnap: true);
         UpdateWaveUI();
+
         OnWaveStarted?.Invoke(currentWave);
+    }
+
+    private void resetWaveProgress()
+    {
+        currentWaveProgress = 0;
+        currentWaveLimit = allowedTypes.Count * requiredAmountToRecyclePerType;
+    }
+
+    private void updateAllowedTypes()
+    {
+        // IF MAU 2/ 3 RANDOM TYPES PER WEAVE
+        requiredAmountToRecyclePerType += 2;
+        allowedTypes.Clear();
+        List<TrashType> shuffled = allTypes.OrderBy(x => UnityEngine.Random.value).ToList();
+
+        for (int i = 0; i < 3 && i < shuffled.Count; i++)
+        {
+            allowedTypes.Add(shuffled[i]);
+        }
+
+        // IF MAU ADD NEW TYPE EVERY WAVE
+        // requiredAmountToRecyclePerType = 10;
+        // foreach (TrashType type in allTypes)
+        // {
+        //     if (!allowedTypes.Contains(type))
+        //     {
+        //         allowedTypes.Add(type);
+        //         break; // only add one per wave
+        //     }
+        // }
     }
 
 
@@ -41,16 +95,25 @@ public class WaveManager : MonoBehaviour
             UIManager.Instance.UpdateWaveText(text);
     }
 
+    public void AcceptTrash(TrashType type)
+    {
+        if (!allowedTypes.Contains(type)) return;
+        if (!recycleCounts.ContainsKey(type)) //initializing in case something
+            recycleCounts[type] = 0;
+
+        if (recycleCounts[type] < requiredAmountToRecyclePerType)
+        {
+            recycleCounts[type]++;
+            ProgressWave();
+        }
+    }
+
     public void ProgressWave()
     {
         currentWaveProgress++;
 
         if (currentWaveProgress >= currentWaveLimit)
-        {
-            currentWaveProgress = 0;
-            currentWaveLimit += 5;
             NextWave();
-        }
 
         UpdateWaveUI();
         UpdateWaveBar();
@@ -85,7 +148,7 @@ public class WaveManager : MonoBehaviour
         if (currentWave >= 6)
         {
             waveProgressBar.value = waveProgressBar.maxValue;
-            return; 
+            return;
         }
 
         // Snap exactly to whole wave if needed

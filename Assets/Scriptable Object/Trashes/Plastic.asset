@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c98b67e0ec6c428082c776021178e02, type: 3}
+  m_Name: Plastic
+  m_EditorClassIdentifier: Assembly-CSharp::ItemType
+  name: Plastic
+  prefabs:
+  - {fileID: 5976709865904894876, guid: 7f31e54c8d5a34874a37d52cf391a2e6, type: 3}
+  - {fileID: 388788372835035247, guid: 2c29c77113fec47398aedffb9c368200, type: 3}
+  - {fileID: 2460747204604069827, guid: 4f9abb543926744ebaa79228d2729cc5, type: 3}
+  - {fileID: 6029376738068472808, guid: af2288303a0ba437bb7823bf88dd2c20, type: 3}
+  - {fileID: 8705706217579817204, guid: eeee39c847e2b484e86ad36e8167b00f, type: 3}
+  - {fileID: 4528423769878743668, guid: e116edd9f014a4241994bcffef78fa64, type: 3}

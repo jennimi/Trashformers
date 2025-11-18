@@ -1,20 +1,14 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "TrashType", menuName = "Scriptable Objects/TrashType")]
+
+[CreateAssetMenu(fileName = "TrashType", menuName = "ScriptableObjects/TrashType")]
 public class TrashType : ScriptableObject
 {
-    public string trashName;
+    public string name;
 
-    public GameObject prefab;
+    public List<GameObject> prefabs;
 
-    public Sprite Icon
-    {
-        get
-        {
-            if (prefab == null) return null;
-
-            var sr = prefab.GetComponent<SpriteRenderer>();
-            return sr != null ? sr.sprite : null;
-        }
-    }
 }
+
+
