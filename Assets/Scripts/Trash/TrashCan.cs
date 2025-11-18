@@ -1,24 +1,20 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class TrashCan : MonoBehaviour
 {
-    public TrashType acceptedType;        
-    public WaveManager waveManager; 
+    public TrashType acceptedType;
+    public WaveManager waveManager;
     public PlayerStorageUI ui;  // Drag in Inspector
 
-    float deliverCooldown = 0.9f;
-    float deliverTimer = 0f;
-
-    private void Update()
-    {
-        if (deliverTimer > 0)
-            deliverTimer -= Time.deltaTime;
-    }
+    public float cooldownDuration = 1f;  // seconds
+    private bool canReceiveTrash = true;
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (deliverTimer > 0) return;
         if (!other.CompareTag("Player")) return;
+        if (!canReceiveTrash) return;   // gate is closed
 
         PlayerStorage storage = other.GetComponent<PlayerStorage>();
 
@@ -27,12 +23,20 @@ public class TrashCan : MonoBehaviour
 
         if (storage.items[0].type == acceptedType)
         {
+            StartCoroutine(TrashCooldown());
             TrashType type = storage.RemoveFirstTrash();
-
             waveManager.ProgressWave();
-
-            deliverTimer = deliverCooldown;
         }
+    }
+
+    private IEnumerator TrashCooldown()
+    {
+        canReceiveTrash = false;
+        Debug.Log("Trash can CLOSED: " + acceptedType);
+        yield return new WaitForSeconds(cooldownDuration);
+        canReceiveTrash = true;
+        Debug.Log("Trash can OPENED: " + acceptedType);
+
     }
 
 }
