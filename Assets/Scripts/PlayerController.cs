@@ -55,6 +55,13 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+
+        // PAUSE
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.TogglePause();
+        }
+
     }
 
     void FixedUpdate()
@@ -90,13 +97,8 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         animator.SetBool("isDashing", false);
 
-        // cooldown wait BEFORE re-allowing new dash
-        float elapsed = 0f;
-        while (elapsed < dashCooldown)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
+        // ⏳ WAIT FOR THE SAME COOLDOWN UI IS USING
+        yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
     }

@@ -5,12 +5,17 @@ using System.Collections.Generic;
 public class PlayerStats : MonoBehaviour
 {
     public PlayerScriptableObject playerData;
+
+    // RUNTIME stats (modifiable)
     public float currentHealth;
+    public float maxHealth;
     public float currentDamage;
     public float currentMoveSpeed;
     public float currentDashSpeed;
 
-    [Header("Experience/Level")]
+    public bool isDead = false;
+
+    [Header("Experience / Level")]
     public int experience = 0;
     public int level = 1;
     public int experienceCap;
@@ -21,111 +26,130 @@ public class PlayerStats : MonoBehaviour
         public int startLevel;
         public int endLevel;
         public int experienceCapIncrease;
-
     }
 
+    public List<LevelRange> levelRanges;
+
+    [Header("Per Level Stat Increase")]
     public float healthIncreasePerLevel = 25f;
     public float damageIncreasePerLevel = 5f;
     public float MoveSpeedIncreasePerLevel = 0.5f;
     public float DashSpeedIncreasePerLevel = 0.5f;
 
-    public List<LevelRange> levelRanges;
-
+    [Header("Damage Cooldown")]
     public bool isInvincible = false;
-    public float damageCooldown = 1f; // 1 second of invincibility
+    public float damageCooldown = 1f;
 
+    [Header("Attack Cooldown")]
     public float attackCooldown = 3f;
     public bool canAttack = true;
 
-
     void Awake()
     {
-        currentHealth = playerData.MaxHealth;
+        // Copy from ScriptableObject ONCE
+        maxHealth = playerData.MaxHealth;
+        currentHealth = maxHealth;
+
         currentDamage = playerData.Damage;
         currentDashSpeed = playerData.BaseDashSpeed;
         currentMoveSpeed = playerData.BaseMoveSpeed;
     }
 
+    void Update()
+    {
+        // DEBUG: Press G to instantly kill the player
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("DEBUG: Killing player with G key");
+            currentHealth = 0;
+            TakeDamage(0);  // forces death logic
+        }
+    }
+
+
     void Start()
     {
+        // Initial EXP cap (using first range)
         experienceCap = levelRanges[0].experienceCapIncrease;
 
-        // initialize UI
         if (UIManager.Instance != null)
         {
-            UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth);
+            UIManager.Instance.UpdateHealth(currentHealth, maxHealth);
             UIManager.Instance.UpdateEXP(experience, experienceCap);
             UIManager.Instance.UpdateLevel(level);
         }
     }
 
+    // ---------------- EXPERIENCE ----------------
     public void IncreaseExperience(int amount)
     {
         experience += amount;
-        if (UIManager.Instance != null)
-            UIManager.Instance.UpdateEXP(experience, experienceCap);
+
+        UIManager.Instance.UpdateEXP(experience, experienceCap);
 
         LevelUpChecker();
     }
 
-
     void LevelUpChecker()
     {
-        if (experience >= experienceCap)
+        while (experience >= experienceCap)
         {
-            Debug.Log("Player is leveling up");
             level++;
             experience -= experienceCap;
 
-            // Increase experience cap for next level
-            int experienceCapIncrease = 0;
+            // Get experience cap increase for this bracket
+            int increase = 0;
             foreach (LevelRange range in levelRanges)
             {
-                experienceCapIncrease = range.experienceCapIncrease;
-                break;
+                if (level >= range.startLevel && level <= range.endLevel)
+                {
+                    increase = range.experienceCapIncrease;
+                    break;
+                }
             }
-            experienceCap += experienceCapIncrease;
 
-            // 🔥 Increase stats here
+            experienceCap += increase;
+
+            // Upgrade player stats
             IncreaseStatsOnLevelUp();
 
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.UpdateLevel(level);
-                UIManager.Instance.UpdateEXP(experience, experienceCap);
-                UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth); // if HP changed
-            }
-
+            // UI update
+            UIManager.Instance.UpdateLevel(level);
+            UIManager.Instance.UpdateEXP(experience, experienceCap);
+            UIManager.Instance.UpdateHealth(currentHealth, maxHealth);
         }
     }
 
-    void IncreaseStatsOnLevelUp()
+    // ---------------- LEVEL UP STAT INCREASE ----------------
+    public void IncreaseStatsOnLevelUp()
     {
-        currentHealth += healthIncreasePerLevel;
+        // Increase Max Health (runtime)
+        maxHealth += healthIncreasePerLevel;
+
+        // Heal player to new max
+        currentHealth = maxHealth;
+
+        // Increase other stats
         currentDamage += damageIncreasePerLevel;
+
         if (currentDashSpeed < 25)
-        {
             currentDashSpeed += DashSpeedIncreasePerLevel;
-        }
 
         if (currentMoveSpeed < 20)
-        {
             currentMoveSpeed += MoveSpeedIncreasePerLevel;
-        }
 
-        Debug.Log($"New Stats → HP: {currentHealth}, DMG: {currentDamage}");
+        Debug.Log($"LEVEL UP → HP: {currentHealth}/{maxHealth}, DMG: {currentDamage}");
     }
 
+    // ---------------- DAMAGE ----------------
     public void TakeDamage(float amount)
     {
-        if (isInvincible)
-            return; // ignore damage
+        if (isInvincible) return;
 
         currentHealth -= amount;
-        if (UIManager.Instance != null)
-            UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth);
-            
-        Debug.Log($"Player took {amount} damage. HP = {currentHealth}");
+        if (currentHealth < 0) currentHealth = 0;
+
+        UIManager.Instance.UpdateHealth(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -136,17 +160,30 @@ public class PlayerStats : MonoBehaviour
         StartCoroutine(DamageCooldownRoutine());
     }
 
-
-    void Die()
-    {
-        Debug.Log("Player died!");
-    }
-
-    private IEnumerator DamageCooldownRoutine()
+    IEnumerator DamageCooldownRoutine()
     {
         isInvincible = true;
         yield return new WaitForSeconds(damageCooldown);
         isInvincible = false;
+    }
+
+    void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        Debug.Log("Player died!");
+
+        // stop player input
+        GetComponent<PlayerController>().enabled = false;
+
+        // play animation once
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+            anim.SetBool("Dead", true);
+
+        // trigger Game Over
+        GameManager.Instance.TriggerGameOver();
     }
 
 }
