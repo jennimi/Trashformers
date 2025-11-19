@@ -9,10 +9,17 @@ public class GameManager : MonoBehaviour
     [Header("Fade Overlay")]
     public Image fadeOverlay;            // Black screen
     public float fadeDuration = 1f;
+    public float winningFadeDuration = 1f;
 
     [Header("UI Panels")]
     public GameObject gameOverPanel;
     public GameObject pausePanel;
+    public GameObject winningPanel; 
+
+    [Header("Audio")]
+    public AudioClip backgroundMusic;
+    private AudioSource audioSource;
+
 
     private bool isPaused = false;
     public bool isGameOver = false;
@@ -22,14 +29,58 @@ public class GameManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
+        // Audio setup
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = backgroundMusic;
+        audioSource.loop = true; // ensures it keeps looping
+        audioSource.playOnAwake = false; // optional
+        audioSource.volume = 0.5f; // adjust as needed
+        audioSource.Play(); // start playing
+
         // Hide panels
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
+        if (winningPanel != null) winningPanel.SetActive(false);
 
         fadeOverlay.gameObject.SetActive(true);
         Color c = fadeOverlay.color;
         c.a = 0f;
         fadeOverlay.color = c;
+    }
+
+    // ------------------------------------------------
+    // LEVEL CLEARED
+    // ------------------------------------------------
+    public void ShowWinningUI()
+    {
+        if (winningPanel != null)
+            StartCoroutine(WinningRoutine());
+    }
+
+    private IEnumerator WinningRoutine()
+    {
+        // Make sure overlay is active and invisible
+        fadeOverlay.gameObject.SetActive(true);
+        Color c = fadeOverlay.color;
+        c.a = 0f;
+        fadeOverlay.color = c;
+
+        float t = 0f;
+        float targetAlpha = 0.95f;
+
+        while (t < winningFadeDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            c.a = Mathf.Lerp(0f, targetAlpha, t / winningFadeDuration);
+            fadeOverlay.color = c;
+            yield return null;
+        }
+
+        c.a = targetAlpha;
+        fadeOverlay.color = c;
+
+        // Show winning UI
+        winningPanel.SetActive(true);
     }
 
     // ------------------------------------------------
@@ -101,6 +152,8 @@ public class GameManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
 
+        audioSource.Pause();
+
         if (pausePanel != null)
             pausePanel.SetActive(true);
 
@@ -113,6 +166,8 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1f;
+
+        audioSource.UnPause();
 
         if (pausePanel != null)
             pausePanel.SetActive(false);
@@ -138,4 +193,5 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
+
 }

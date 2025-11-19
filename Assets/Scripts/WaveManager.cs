@@ -16,6 +16,9 @@ public class WaveManager : MonoBehaviour
     public GameObject tileset4;
     public GameObject tileset5;
 
+    [Header("Winning UI / Scene Objects")]
+    public GameObject winningContainer; 
+
     private void Awake()
     {
         currentWave = 1;
@@ -29,7 +32,12 @@ public class WaveManager : MonoBehaviour
     public void NextWave()
     {
         if (currentWave >= 6)
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.ShowWinningUI();
+
             return;
+        }
 
         // Hide dirty palette for THIS wave
         HideTilesetForWave(currentWave);
