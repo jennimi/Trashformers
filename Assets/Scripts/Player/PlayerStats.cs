@@ -20,6 +20,11 @@ public class PlayerStats : MonoBehaviour
     public int level = 1;
     public int experienceCap;
 
+    [Header("Audio")]
+    public AudioClip expDingClip;
+    private AudioSource audioSource;
+
+
     [System.Serializable]
     public class LevelRange
     {
@@ -53,6 +58,9 @@ public class PlayerStats : MonoBehaviour
         currentDamage = playerData.Damage;
         currentDashSpeed = playerData.BaseDashSpeed;
         currentMoveSpeed = playerData.BaseMoveSpeed;
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -84,6 +92,9 @@ public class PlayerStats : MonoBehaviour
     public void IncreaseExperience(int amount)
     {
         experience += amount;
+
+        if (expDingClip != null)
+            audioSource.PlayOneShot(expDingClip);
 
         UIManager.Instance.UpdateEXP(experience, experienceCap);
 
