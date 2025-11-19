@@ -9,6 +9,13 @@ public class WaveManager : MonoBehaviour
 
     public event Action<int> OnWaveStarted;
 
+    [Header("Tilesets to hide per wave clear")]
+    public GameObject tileset1;
+    public GameObject tileset2;
+    public GameObject tileset3;
+    public GameObject tileset4;
+    public GameObject tileset5;
+
     private void Awake()
     {
         currentWave = 1;
@@ -23,6 +30,9 @@ public class WaveManager : MonoBehaviour
     {
         if (currentWave >= 6)
             return;
+
+        // Hide dirty palette for THIS wave
+        HideTilesetForWave(currentWave);
 
         currentWave++;
 
@@ -40,6 +50,7 @@ public class WaveManager : MonoBehaviour
         {
             currentWaveProgress = 0;
             currentWaveLimit += 5;
+
             NextWave();
             return;
         }
@@ -58,5 +69,28 @@ public class WaveManager : MonoBehaviour
             currentWaveLimit,
             forceSnap
         );
+    }
+
+    // CLEANLINESS
+    private void HideTilesetForWave(int wave)
+    {
+        switch (wave)
+        {
+            case 1:
+                if (tileset1 != null) tileset1.SetActive(false);
+                break;
+            case 2:
+                if (tileset2 != null) tileset2.SetActive(false);
+                break;
+            case 3:
+                if (tileset3 != null) tileset3.SetActive(false);
+                break;
+            case 4:
+                if (tileset4 != null) tileset4.SetActive(false);
+                break;
+            case 5:
+                if (tileset5 != null) tileset5.SetActive(false);
+                break;
+        }
     }
 }
