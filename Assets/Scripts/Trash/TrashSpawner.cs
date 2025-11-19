@@ -9,7 +9,7 @@ public class TrashSpawner : MonoBehaviour
     public WaveManager waveManager; // use the list from here for allowed types to spawn
 
     // spawning relevant variables
-    public float spawnInterval = 2f; // seconds
+    public float spawnInterval = 4f; // seconds
     public float radius = 6f;
     public int maxActive = 10;
     int activeCount = 0;
@@ -57,8 +57,8 @@ public class TrashSpawner : MonoBehaviour
         GameObject prefab = type.prefabs[Random.Range(0, type.prefabs.Count)];
 
         // position for spawning
-        Vector2 offset = Random.insideUnitCircle * radius;
-        Vector3 spawnPos = player.position + (Vector3)offset;
+        Vector2 dir = Random.insideUnitCircle.normalized;   // pick a direction only
+        Vector3 spawnPos = player.position + (Vector3)(dir * radius);
 
 
         var go = Instantiate(prefab, spawnPos, Quaternion.identity);
@@ -92,6 +92,18 @@ public class TrashSpawner : MonoBehaviour
     private void HandleWaveStarted(int waveNumber)
     {
         DestroyAllTrash();
+    }
+
+    public void DestroyTrashOfType(TrashType type)
+    {
+        foreach (var trash in FindObjectsOfType<TrashInstance>())
+        {
+            if (trash.type == type)
+            {
+                Destroy(trash.gameObject);
+                activeCount--;
+            }
+        }
     }
 
     public void DestroyAllTrash()

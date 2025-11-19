@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("STARTING");
-        requiredAmountToRecyclePerType = -1;
+        requiredAmountToRecyclePerType = 2;
 
         // instantiating data for first wave
         currentWave = 1;
@@ -72,7 +72,7 @@ public class WaveManager : MonoBehaviour
         recycleCounts = new Dictionary<TrashType, int>();
 
         // IF MAU 2/ 3 RANDOM TYPES PER WEAVE
-        requiredAmountToRecyclePerType += 2;
+        requiredAmountToRecyclePerType++;
         allowedTypes.Clear();
         List<TrashType> shuffled = allTypes.OrderBy(x => UnityEngine.Random.value).ToList();
 
@@ -114,14 +114,19 @@ public class WaveManager : MonoBehaviour
     public void AcceptTrash(TrashType type)
     {
         if (!allowedTypes.Contains(type)) return;
-        if (!recycleCounts.ContainsKey(type)) //initializing in case something
-            recycleCounts[type] = 0;
 
-        if (recycleCounts[type] < requiredAmountToRecyclePerType)
+        if (!recycleCounts.ContainsKey(type)) return;
+
+        recycleCounts[type]++;
+
+        // Reached per-type limit?
+        if (recycleCounts[type] >= requiredAmountToRecyclePerType)
         {
-            recycleCounts[type]++;
-            ProgressWave();
+            // remove all trash of this type from the map
+            FindObjectOfType<TrashSpawner>()?.DestroyTrashOfType(type);
         }
+
+        ProgressWave();
     }
 
     public void ProgressWave()
