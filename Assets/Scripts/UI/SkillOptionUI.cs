@@ -22,7 +22,7 @@ public class SkillOptionUI : MonoBehaviour
         var player = FindAnyObjectByType<PlayerSkillState>();
         int lvl = player.GetLevel(s); // 0 if not learned
 
-        levelText.text = lvl == 0 ? "NEW" : $"Level {lvl + 1}";
+        levelText.text = $"Level {lvl + 1}";
 
         // Clamp lvl so we don't go out of bounds
         if (s.levelDescriptions != null && s.levelDescriptions.Count > 0)
@@ -38,8 +38,6 @@ public class SkillOptionUI : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("Instance = " + SkillUpgradeManager.Instance);
-        Debug.Log("Skill = " + skill);
 
         SkillUpgradeManager.Instance.SelectSkill(skill);
     }

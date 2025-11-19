@@ -10,22 +10,21 @@ public class IncenseSkillCaster : MonoBehaviour
     [Header("Skill Stats")]
     public float baseDamage = 5f;
     public float damagePerLevel = 2f;
-    public int level = 1;
-
-    private bool canCast = true;
+    public int level = 0;
 
     [HideInInspector] public float damagePerSecond;
 
+    private GameObject activeAura;
+
     public void Cast()
     {
-        if (!canCast) return;
+        if (activeAura != null) return; // Already active
 
-        GameObject incenseObj = Instantiate(aoePrefab, transform.position, Quaternion.identity);
-
-        // Pass level-scaled stats to the incense effect
-        IncenseSkill incense = incenseObj.GetComponent<IncenseSkill>();
+        activeAura = Instantiate(aoePrefab, transform.position, Quaternion.identity);
+        IncenseSkill incense = activeAura.GetComponent<IncenseSkill>();
         incense.damagePerSecond = GetDamage();
     }
+
 
     public float GetDamage()
     {

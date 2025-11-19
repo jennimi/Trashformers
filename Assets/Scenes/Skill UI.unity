@@ -99013,6 +99013,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -99109,6 +99110,18 @@ MonoBehaviour:
   target: {fileID: 1484890152}
   smoothSpeed: 10
   offset: {x: 0, y: 0, z: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034abdea6bdc0439ab6ed7cc52db137a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraBounds
 --- !u!1 &649464212
 GameObject:
   m_ObjectHideFlags: 0
@@ -112147,6 +112160,10 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1484890152}
+    - target: {fileID: -2635012944950739480, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: playerState
+      value: 
+      objectReference: {fileID: 1329810833673139927}
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -112160,9 +112177,17 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: skillDefinition
       value: 
       objectReference: {fileID: 11400000, guid: bc53332a670874dd8a74d99e1e066ded, type: 2}
+    - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: cooldownReduction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: dashUI
       value: 
@@ -112182,6 +112207,10 @@ PrefabInstance:
     - target: {fileID: 4795915318664202073, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5128463422893137798, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: level
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5128463422893137798, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: skillDefinition
@@ -112244,9 +112273,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: skillDefinition
       value: 
       objectReference: {fileID: 11400000, guid: 50091a6d21f704c8ba93618bb8142eda, type: 2}
+    - target: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: baseProjectileCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8383077189512860373, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_BodyType
       value: 1
@@ -112269,7 +112306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8464343517064733546, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: attackCooldown
-      value: 10
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8464343517064733546, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: damageCooldown

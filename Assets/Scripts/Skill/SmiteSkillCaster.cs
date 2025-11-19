@@ -17,7 +17,7 @@ public class SmiteSkillCaster : MonoBehaviour
     public float baseDuration = 1.5f;
     public float durationPerLevel = 0.2f;
 
-    public int level = 1;
+    public int level = 0;
 
     public float baseCooldown = 5f;
     public float cooldownReduction = 0.25f;

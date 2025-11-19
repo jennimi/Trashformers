@@ -56,8 +56,26 @@ public class SkillUpgradeManager : MonoBehaviour
     {
         playerState.LearnOrUpgrade(skill);
 
+        UpgradeCasterFor(skill);
+
         // Re-enable gameplay
         selectionUI.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    private void UpgradeCasterFor(SkillDefinition skill)
+    {
+        var controller = FindAnyObjectByType<PlayerSkillController>();
+
+        if (controller == null) return;
+
+        if (skill == controller.bounceCaster.skillDefinition)
+            controller.bounceCaster.LevelUp();
+
+        if (skill == controller.incenseCaster.skillDefinition)
+            controller.incenseCaster.LevelUp();
+
+        if (skill == controller.smiteCaster.skillDefinition)
+            controller.smiteCaster.LevelUp();
     }
 }

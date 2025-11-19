@@ -18,10 +18,9 @@ public class BouncingSkillCaster : MonoBehaviour
     public float cooldownReduction = 0.25f;
     private bool canCast = true;
 
-    public int level = 1;
+    public int level = 0;
 
     [HideInInspector] public int projectileCount;
-    [HideInInspector] public float damage;
     [HideInInspector] public float cooldown;
 
     public void Cast(Vector3 origin)
