@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2923644689421189007, guid: fed31ef4fe2c742e38c6fa333c732221, type: 3}
+      propertyPath: waveManager
+      value: 
+      objectReference: {fileID: 1637375458}
+    - target: {fileID: 2923644689421189007, guid: fed31ef4fe2c742e38c6fa333c732221, type: 3}
       propertyPath: acceptedType
       value: 
       objectReference: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
@@ -366,6 +370,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8704976704841321752, guid: 74c7b77207845426e96107703b84db65, type: 3}
+      propertyPath: waveManager
+      value: 
+      objectReference: {fileID: 1637375458}
     - target: {fileID: 8869529480690792807, guid: 74c7b77207845426e96107703b84db65, type: 3}
       propertyPath: m_Name
       value: Trashcan_Paper
@@ -99251,6 +99259,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7708375101822363813, guid: 9f2cc5b7d392a4b889b927879d56acf7, type: 3}
+      propertyPath: waveManager
+      value: 
+      objectReference: {fileID: 1637375458}
+    - target: {fileID: -7708375101822363813, guid: 9f2cc5b7d392a4b889b927879d56acf7, type: 3}
       propertyPath: acceptedType
       value: 
       objectReference: {fileID: 11400000, guid: 2b1287f0d66844b91828b0685d7eb2a6, type: 2}
@@ -99396,7 +99408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashCan
   acceptedType: {fileID: 11400000, guid: ad15cfc17dcfe4c7688a344ee5518f9c, type: 2}
-  waveManager: {fileID: 0}
+  waveManager: {fileID: 1637375458}
   ui: {fileID: 0}
   cooldownDuration: 1
 --- !u!1 &1325199326
