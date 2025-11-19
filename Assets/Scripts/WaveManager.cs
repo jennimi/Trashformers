@@ -69,6 +69,8 @@ public class WaveManager : MonoBehaviour
 
     private void updateAllowedTypes()
     {
+        recycleCounts = new Dictionary<TrashType, int>();
+
         // IF MAU 2/ 3 RANDOM TYPES PER WEAVE
         requiredAmountToRecyclePerType += 2;
         allowedTypes.Clear();
@@ -77,6 +79,7 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < 3 && i < shuffled.Count; i++)
         {
             allowedTypes.Add(shuffled[i]);
+            recycleCounts[shuffled[i]] = 0;
         }
 
         // IF MAU ADD NEW TYPE EVERY WAVE

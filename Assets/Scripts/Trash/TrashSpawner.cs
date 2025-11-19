@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TrashSpawner : MonoBehaviour
 {
@@ -40,26 +41,16 @@ public class TrashSpawner : MonoBehaviour
     {
         if (activeCount >= maxActive) return;
 
-        List<TrashType> possibleTrashes = new List<TrashType>();
+        var possibleTrashes = waveManager.allowedTypes
+            .Where(t => {
+                waveManager.recycleCounts.TryGetValue(t, out int current);
+                return current < waveManager.requiredAmountToRecyclePerType;
+            })
+            .ToList();
 
-        // choose category
-        TrashType type = possibleTrashes[Random.Range(0, possibleTrashes.Count)];
-
-        // Remove any type that already reached its per-type limit
-        foreach (TrashType type in possibleTrashes)
-        {
-            int current = waveManager.recycleCounts.ContainsKey(t)
-            ? waveManager.recycleCounts[t]
-            : 0;
-
-            if (current < waveManager.requiredAmountToRecyclePerType)
-            {
-                possibleTrashes.Add(t);
-            }
-        }
-
-        // If no types left, stop spawning
         if (possibleTrashes.Count == 0) return;
+
+        TrashType type = possibleTrashes[Random.Range(0, possibleTrashes.Count)];
 
         // choose prefab from category
         if (type.prefabs == null || type.prefabs.Count == 0) return;
