@@ -76,4 +76,31 @@ public class TrashSpawner : MonoBehaviour
         activeCount = Mathf.Max(0, activeCount - 1);
         Debug.Log("Active Count: " + activeCount);
     }
+
+    private void Start()
+    {
+        if (waveManager != null)
+            waveManager.OnWaveStarted += HandleWaveStarted;
+    }
+
+    private void OnDestroy()
+    {
+        if (waveManager != null)
+            waveManager.OnWaveStarted -= HandleWaveStarted;
+    }
+
+    private void HandleWaveStarted(int waveNumber)
+    {
+        DestroyAllTrash();
+    }
+
+    public void DestroyAllTrash()
+    {
+        foreach (var trash in FindObjectsOfType<TrashInstance>())
+        {
+            Destroy(trash.gameObject);
+        }
+
+        activeCount = 0;
+    }
 }

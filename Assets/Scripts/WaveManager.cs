@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("STARTING");
-        requiredAmountToRecyclePerType = 3;
+        requiredAmountToRecyclePerType = -1;
 
         // instantiating data for first wave
         currentWave = 1;

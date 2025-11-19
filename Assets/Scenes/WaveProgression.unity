@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8088532257589302074, guid: fed31ef4fe2c742e38c6fa333c732221, type: 3}
+      propertyPath: m_Radius
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 8661265952775849610, guid: fed31ef4fe2c742e38c6fa333c732221, type: 3}
       propertyPath: m_Name
       value: Trashcan_FoodWaste
@@ -322,6 +326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1002571739533015777, guid: 74c7b77207845426e96107703b84db65, type: 3}
+      propertyPath: m_Radius
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 1292752453172241143, guid: 74c7b77207845426e96107703b84db65, type: 3}
       propertyPath: m_LocalScale.x
       value: 20
@@ -99270,6 +99278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trashcan_Metal
       objectReference: {fileID: 0}
+    - target: {fileID: 345905208599722817, guid: 9f2cc5b7d392a4b889b927879d56acf7, type: 3}
+      propertyPath: m_Radius
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 5397760917382528004, guid: 9f2cc5b7d392a4b889b927879d56acf7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.92
@@ -99528,6 +99540,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2099100190240538732, guid: ebb26acff729b4e7db3bbe9f0a702cb4, type: 3}
+      propertyPath: m_Radius
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 1938371697997401445, guid: ebb26acff729b4e7db3bbe9f0a702cb4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.65
@@ -111400,21 +111416,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStorage
   maxCapacity: 6
   storageUI: {fileID: 117153753}
---- !u!114 &2075490282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075490270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef0fdeaf9f8a147ea9d51c117c05b039, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaveTestInput
-  storage: {fileID: 2075490276}
-  ui: {fileID: 117153753}
-  wave: {fileID: 1637375458}
 --- !u!1 &2082960198
 GameObject:
   m_ObjectHideFlags: 0
@@ -111645,9 +111646,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2075490276}
-    - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2075490282}
   m_SourcePrefab: {fileID: 100100000, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
