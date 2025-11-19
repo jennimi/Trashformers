@@ -13,6 +13,14 @@ public class SkillOptionUI : MonoBehaviour
     public PlayerSkillState player;
 
 
+    public Button button;
+
+    public void ResetVisual()
+    {
+        button.interactable = false;   // Forces state reset
+        button.interactable = true;    // Forces Unity to redraw as normal
+    }
+
     public void Setup(SkillDefinition s)
     {
         skill = s; // save reference for OnClick
@@ -38,8 +46,8 @@ public class SkillOptionUI : MonoBehaviour
 
     public void OnClick()
     {
-
         SkillUpgradeManager.Instance.SelectSkill(skill);
+        ResetVisual();
     }
 
 }

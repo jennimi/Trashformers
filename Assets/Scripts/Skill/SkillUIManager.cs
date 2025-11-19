@@ -67,9 +67,31 @@ public class SkillUIManager : MonoBehaviour
         }
     }
 
-        public void OpenSkillUI()
+    public void OpenSkillUI()
     {
-        panel.SetActive(true);     // show the whole UI panel
-        ShowRandomSkillOptions();       // generate the cards
+        // Check if anything can still level up
+        bool hasUpgradeable = false;
+
+        foreach (var s in allSkills)
+        {
+            if (player.GetLevel(s) < s.maxLevel)
+            {
+                hasUpgradeable = true;
+                break;
+            }
+        }
+
+        if (!hasUpgradeable)
+        {
+            // No upgrade → skip opening the panel
+            Debug.Log("All skills maxed — skipping skill UI.");
+            return;
+        }
+
+        // Otherwise, open normally
+        panel.SetActive(true);
+        ShowRandomSkillOptions();
+        Time.timeScale = 0f;
     }
+
 }

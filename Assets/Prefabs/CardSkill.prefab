@@ -232,6 +232,7 @@ MonoBehaviour:
   description: {fileID: 5234581184509427787}
   skill: {fileID: 0}
   player: {fileID: 0}
+  button: {fileID: 1937884070789496920}
 --- !u!1 &3716702851180197456
 GameObject:
   m_ObjectHideFlags: 0

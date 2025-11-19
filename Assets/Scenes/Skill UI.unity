@@ -99294,8 +99294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.9994, y: 0}
-  m_SizeDelta: {x: 856.5, y: 482}
+  m_AnchoredPosition: {x: -0.000086305, y: 0}
+  m_SizeDelta: {x: 892, y: 414.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &716935466
 CanvasRenderer:
@@ -99739,8 +99739,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.1025085, y: -0.000045776367}
-  m_SizeDelta: {x: 10.2048, y: 0.00012207}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_SizeDelta: {x: -0.000061035, y: -0.000030518}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1153058075
 MonoBehaviour:
@@ -100220,7 +100220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   waves:
   - waveName: Wave 1
-    killTarget: 10
+    killTarget: 100
     baseSpawnInterval: 4
     enemyGroups:
     - enemyName: Enemy
@@ -100243,8 +100243,8 @@ MonoBehaviour:
     killCount: 0
   currentWaveCount: 0
   waveInterval: 3
-  difficultyRampRate: 0.003
-  maxDifficultyMultiplier: 3
+  difficultyRampRate: 0.01
+  maxDifficultyMultiplier: 5
 --- !u!1 &1545553398
 GameObject:
   m_ObjectHideFlags: 0
@@ -112333,39 +112333,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1329810833673139926}
   m_SourcePrefab: {fileID: 100100000, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
---- !u!114 &1329810833673139923 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
-  m_PrefabInstance: {fileID: 1329810833673139922}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075490270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42914304265f34421b9a92a3c2de470d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SmiteSkillCaster
---- !u!114 &1329810833673139924 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5128463422893137798, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
-  m_PrefabInstance: {fileID: 1329810833673139922}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075490270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72773a1d45c97491d926368ecfc564af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IncenseSkillCaster
---- !u!114 &1329810833673139925 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
-  m_PrefabInstance: {fileID: 1329810833673139922}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075490270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85916d883f96457ea430729ea7504f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BouncingSkillCaster
 --- !u!114 &1329810833673139926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112378,10 +112345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c2c7e73de524baea781c3c386bcab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillEffectHandler
-  state: {fileID: 1329810833673139927}
-  bouncing: {fileID: 1329810833673139925}
-  incense: {fileID: 1329810833673139924}
-  smite: {fileID: 1329810833673139923}
 --- !u!114 &1329810833673139927
 MonoBehaviour:
   m_ObjectHideFlags: 0
