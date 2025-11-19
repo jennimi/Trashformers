@@ -11,7 +11,7 @@ public class WaveManager : MonoBehaviour
     public List<TrashType> allTypes;
     public List<TrashType> allowedTypes = new List<TrashType>();
     public Dictionary<TrashType, int> recycleCounts = new Dictionary<TrashType, int>();
-    public int requiredAmountToRecyclePerType = 10;
+    public int requiredAmountToRecyclePerType = 5;
 
     public int currentWaveProgress = 0;
     public int currentWaveLimit = 0;
@@ -24,6 +24,9 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("STARTING");
+        requiredAmountToRecyclePerType = 3;
+
         // instantiating data for first wave
         currentWave = 1;
         updateAllowedTypes();
@@ -57,8 +60,11 @@ public class WaveManager : MonoBehaviour
 
     private void resetWaveProgress()
     {
+        Debug.Log("BEFORE required amount per type: " + requiredAmountToRecyclePerType);
         currentWaveProgress = 0;
         currentWaveLimit = allowedTypes.Count * requiredAmountToRecyclePerType;
+        Debug.Log("allowed types: " + allowedTypes.Count);
+        Debug.Log("AFTER required amount per type: " + requiredAmountToRecyclePerType);
     }
 
     private void updateAllowedTypes()
@@ -88,7 +94,14 @@ public class WaveManager : MonoBehaviour
 
     private void UpdateWaveUI()
     {
-        string text = "Wave: " + currentWave + " | Progress: " + currentWaveProgress + "/" + currentWaveLimit;
+        string text = $"Wave: {currentWave} | Progress: {currentWaveProgress}/{currentWaveLimit}\n";
+
+        foreach (var type in allowedTypes)
+        {
+            int collected = recycleCounts.ContainsKey(type) ? recycleCounts[type] : 0;
+            text += $"{type.name}: {collected}/{requiredAmountToRecyclePerType}\n";
+        }
+
         if (waveText != null) waveText.text = text; // keep if you want local TMP
 
         if (UIManager.Instance != null)

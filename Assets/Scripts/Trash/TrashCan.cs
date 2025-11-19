@@ -25,7 +25,7 @@ public class TrashCan : MonoBehaviour
         {
             StartCoroutine(TrashCooldown());
             TrashType type = storage.RemoveFirstTrash();
-            waveManager.ProgressWave();
+            waveManager.AcceptTrash(acceptedType);
         }
     }
 
