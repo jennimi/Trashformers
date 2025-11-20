@@ -9,5 +9,7 @@ public class SkillDefinition : ScriptableObject
 
     public int maxLevel = 3;
 
+    public Color iconColor = Color.white;
+
     public List<string> levelDescriptions = new List<string>();
 }

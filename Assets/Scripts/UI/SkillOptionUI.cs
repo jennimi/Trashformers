@@ -15,6 +15,8 @@ public class SkillOptionUI : MonoBehaviour
 
     public Button button;
 
+    public Image iconImage;
+
     public void ResetVisual()
     {
         button.interactable = false;   // Forces state reset
@@ -23,16 +25,19 @@ public class SkillOptionUI : MonoBehaviour
 
     public void Setup(SkillDefinition s)
     {
-        skill = s; // save reference for OnClick
+        skill = s;
         icon.sprite = s.icon;
+
+        // 🔥 Set the icon color here
+        icon.color = s.iconColor;
+
         title.text = s.skillName;
 
         var player = FindAnyObjectByType<PlayerSkillState>();
-        int lvl = player.GetLevel(s); // 0 if not learned
+        int lvl = player.GetLevel(s);
 
         levelText.text = $"Level {lvl + 1}";
 
-        // Clamp lvl so we don't go out of bounds
         if (s.levelDescriptions != null && s.levelDescriptions.Count > 0)
         {
             int descIndex = Mathf.Clamp(lvl, 0, s.levelDescriptions.Count - 1);
@@ -43,6 +48,7 @@ public class SkillOptionUI : MonoBehaviour
             description.text = "";
         }
     }
+
 
     public void OnClick()
     {

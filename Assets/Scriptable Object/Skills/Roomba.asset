@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Roomba
   m_EditorClassIdentifier: Assembly-CSharp::SkillDefinition
   skillName: Roomba
-  icon: {fileID: 0}
+  icon: {fileID: -2413806693520163455, guid: 0e357176e42a8424097aaac0cbea2d0e, type: 3}
   maxLevel: 3
+  iconColor: {r: 0, g: 0.050980393, b: 0.8980392, a: 1}
   levelDescriptions:
-  - Summon two cleaning robots to bounce across the battlefield, obliterating enemies
-    as they go
-  - Add one more cleaning robot
-  - Add one more cleaning robot
+  - Summon two orbs bounce across the battlefield, obliterating enemies as they go
+  - Add one more orb
+  - Add one more orb

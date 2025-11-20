@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Incense
   m_EditorClassIdentifier: Assembly-CSharp::SkillDefinition
   skillName: Incense
-  icon: {fileID: 0}
+  icon: {fileID: -2413806693520163455, guid: 0e357176e42a8424097aaac0cbea2d0e, type: 3}
   maxLevel: 3
+  iconColor: {r: 0.7882353, g: 0.5372549, b: 0.21176471, a: 1}
   levelDescriptions:
   - Calls down a random area-of-effect smite near the player, obliterating enemies
     caught within its blast

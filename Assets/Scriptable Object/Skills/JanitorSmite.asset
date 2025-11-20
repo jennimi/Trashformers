@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: JanitorSmite
   m_EditorClassIdentifier: Assembly-CSharp::SkillDefinition
   skillName: Janitor Smite
-  icon: {fileID: 0}
+  icon: {fileID: -2413806693520163455, guid: 651d291bef18d40499fd03cf5396b0a5, type: 3}
   maxLevel: 3
+  iconColor: {r: 0.011764706, g: 1, b: 0.8666667, a: 1}
   levelDescriptions:
-  - Hurl a mop at the enemy to deal damage in a randomly selected area of the battlefield
+  - Cast an AoE blast of cleaning force that damages enemies in a random location.
   - Decrease the cooldown
   - Decrease the cooldown
