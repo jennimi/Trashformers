@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 2b1287f0d66844b91828b0685d7eb2a6, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 3738535616289523155}
+  name: Kunci Bekas
 --- !u!58 &7120619663144298969
 CircleCollider2D:
   m_ObjectHideFlags: 0

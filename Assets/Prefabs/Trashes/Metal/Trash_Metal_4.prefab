@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 2b1287f0d66844b91828b0685d7eb2a6, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 8240533891334272021}
+  name: Bekas Kaleng Sarden
 --- !u!58 &-5672474945257472844
 CircleCollider2D:
   m_ObjectHideFlags: 0

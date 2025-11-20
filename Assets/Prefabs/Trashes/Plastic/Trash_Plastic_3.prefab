@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: ad15cfc17dcfe4c7688a344ee5518f9c, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 2460747204604069827}
+  name: Sisa Teh Plastik
 --- !u!58 &2571098757164982560
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 8550169487780519684}
+  name: Cangkang Kacang
 --- !u!58 &2394721057736941175
 CircleCollider2D:
   m_ObjectHideFlags: 0

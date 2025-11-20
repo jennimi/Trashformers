@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 3228962356572401066}
+  name: Cangkang Telor
 --- !u!58 &5448708423053355141
 CircleCollider2D:
   m_ObjectHideFlags: 0

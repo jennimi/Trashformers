@@ -11,6 +11,10 @@ public class WaveManager : MonoBehaviour
     public List<TrashType> allTypes;
     public List<TrashType> allowedTypes = new List<TrashType>();
     public Dictionary<TrashType, int> recycleCounts = new Dictionary<TrashType, int>();
+    public Dictionary<TrashType, int> chosenTrashIndex = new Dictionary<TrashType, int>();
+    public Dictionary<TrashType, string> chosenTrashNames = new Dictionary<TrashType, string>();
+
+
     public int requiredAmountToRecyclePerType = 5;
 
     public int currentWaveProgress = 0;
@@ -82,16 +86,16 @@ public class WaveManager : MonoBehaviour
             recycleCounts[shuffled[i]] = 0;
         }
 
-        // IF MAU ADD NEW TYPE EVERY WAVE
-        // requiredAmountToRecyclePerType = 10;
-        // foreach (TrashType type in allTypes)
-        // {
-        //     if (!allowedTypes.Contains(type))
-        //     {
-        //         allowedTypes.Add(type);
-        //         break; // only add one per wave
-        //     }
-        // }
+        foreach (var type in allowedTypes)
+        {
+            int index = UnityEngine.Random.Range(0, 6);   // 0 to 5 inclusive
+            chosenTrashIndex[type] = index;
+            TrashInstance ti = type.prefabs[index].GetComponent<TrashInstance>();
+
+            chosenTrashNames[type] = ti.name;
+            Debug.Log("Type: " + type + " | Index: " + chosenTrashIndex[type] + " | Name: " + chosenTrashNames[type]);
+        }
+
     }
 
 
@@ -102,7 +106,8 @@ public class WaveManager : MonoBehaviour
         foreach (var type in allowedTypes)
         {
             int collected = recycleCounts.ContainsKey(type) ? recycleCounts[type] : 0;
-            text += $"{type.name}: {collected}/{requiredAmountToRecyclePerType}\n";
+            string trashName = chosenTrashNames[type];
+            text += $"{trashName}: {collected}/{requiredAmountToRecyclePerType}\n";
         }
 
         if (waveText != null) waveText.text = text; // keep if you want local TMP

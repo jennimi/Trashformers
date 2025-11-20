@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 810130293680484594}
+  name: Kulit Semangka
 --- !u!58 &-5892759283043269184
 CircleCollider2D:
   m_ObjectHideFlags: 0

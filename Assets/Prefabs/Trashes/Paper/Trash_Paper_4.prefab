@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 42c5af5c4fa0149ee8a1b7896e9557f4, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 1023196396108065098}
+  name: Tiket Parkir
 --- !u!58 &5398480988647224880
 CircleCollider2D:
   m_ObjectHideFlags: 0

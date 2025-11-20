@@ -8,6 +8,8 @@ public class TrashInstance : MonoBehaviour
 
     public GameObject prefab;
 
+    public string name;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,7 +19,7 @@ public class TrashInstance : MonoBehaviour
 
         // guard clause
         if (storage == null) return;
-        
+
         if (storage.AddTrash(this))
         {
             spawner?.NotifyPickupCollected();

@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 8661265952775849610}
+  name: Kulit Pisang
 --- !u!58 &8088532257589302074
 CircleCollider2D:
   m_ObjectHideFlags: 0

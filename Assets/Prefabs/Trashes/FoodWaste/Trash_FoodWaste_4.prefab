@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 4416302879563379470}
+  name: Sisa Apel
 --- !u!58 &-1620990819010690595
 CircleCollider2D:
   m_ObjectHideFlags: 0

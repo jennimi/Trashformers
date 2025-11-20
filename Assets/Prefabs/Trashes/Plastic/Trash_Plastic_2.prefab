@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: ad15cfc17dcfe4c7688a344ee5518f9c, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 388788372835035247}
+  name: Bungkus Jajan
 --- !u!58 &-1644340485015925545
 CircleCollider2D:
   m_ObjectHideFlags: 0

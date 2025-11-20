@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 0893ac3526c40419296372bcaba5cfdb, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 6212539455777347876}
+  name: Tulang
 --- !u!58 &-2578662089421650149
 CircleCollider2D:
   m_ObjectHideFlags: 0

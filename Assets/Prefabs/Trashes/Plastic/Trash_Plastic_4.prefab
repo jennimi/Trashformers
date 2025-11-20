@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: ad15cfc17dcfe4c7688a344ee5518f9c, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 6029376738068472808}
+  name: Deterjen Sachet
 --- !u!58 &-884324625807010470
 CircleCollider2D:
   m_ObjectHideFlags: 0

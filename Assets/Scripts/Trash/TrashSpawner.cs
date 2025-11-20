@@ -54,7 +54,7 @@ public class TrashSpawner : MonoBehaviour
 
         // choose prefab from category
         if (type.prefabs == null || type.prefabs.Count == 0) return;
-        GameObject prefab = type.prefabs[Random.Range(0, type.prefabs.Count)];
+        GameObject prefab = type.prefabs[waveManager.chosenTrashIndex[type]];
 
         // position for spawning
         Vector2 dir = Random.insideUnitCircle.normalized;   // pick a direction only

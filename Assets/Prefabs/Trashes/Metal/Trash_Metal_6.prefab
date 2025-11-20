@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 2b1287f0d66844b91828b0685d7eb2a6, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 304781221987568547}
+  name: Bekas Kaleng Soda
 --- !u!58 &345905208599722817
 CircleCollider2D:
   m_ObjectHideFlags: 0

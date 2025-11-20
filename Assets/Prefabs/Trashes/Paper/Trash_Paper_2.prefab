@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 42c5af5c4fa0149ee8a1b7896e9557f4, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 8869529480690792807}
+  name: Kertas Robek
 --- !u!58 &1002571739533015777
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 42c5af5c4fa0149ee8a1b7896e9557f4, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 6174642664983272574}
+  name: Bekas Tisu
 --- !u!58 &5010644257961887533
 CircleCollider2D:
   m_ObjectHideFlags: 0

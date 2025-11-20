@@ -107,6 +107,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 2b1287f0d66844b91828b0685d7eb2a6, type: 2}
   spawner: {fileID: 0}
   prefab: {fileID: 5991632755361314044}
+  name: Paku Rusak
 --- !u!58 &-5868240711050554487
 CircleCollider2D:
   m_ObjectHideFlags: 0
