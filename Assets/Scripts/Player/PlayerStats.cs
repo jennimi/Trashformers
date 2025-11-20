@@ -96,6 +96,8 @@ public class PlayerStats : MonoBehaviour
                 UIManager.Instance.UpdateHealth(currentHealth, playerData.MaxHealth); // if HP changed
             }
 
+            
+            FindAnyObjectByType<SkillUIManager>().OpenSkillUI();
         }
     }
 

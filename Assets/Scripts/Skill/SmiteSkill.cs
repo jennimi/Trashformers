@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class SmiteSkill : MonoBehaviour
 {
-    public float damage = 50f;       // Total damage
-    public float radius = 2f;        // AoE size
-    public float duration = 2f;    // How long the AoE stays
+    [HideInInspector] public float damage; 
+    [HideInInspector] public float radius;
+    [HideInInspector] public float duration;
+
     private float timer = 0f;
 
     void Update()
@@ -14,22 +15,21 @@ public class SmiteSkill : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        // Deal damage to all enemies in the AoE
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (var col in hits)
         {
             if (col.TryGetComponent(out EnemyStats enemy))
             {
-                enemy.TakeDamage(damage * Time.fixedDeltaTime); // DPS
+                enemy.TakeDamage(damage * Time.fixedDeltaTime);
             }
         }
     }
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

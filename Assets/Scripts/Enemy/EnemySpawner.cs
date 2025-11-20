@@ -152,10 +152,8 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < scaledSpawnCount; i++)
         {
-            Vector2 spawnPosition = new Vector2(
-                player.transform.position.x + Random.Range(-10f, 10f),
-                player.transform.position.y + Random.Range(-10f, 10f)
-            );
+            Vector2 spawnPosition = GetOffScreenSpawnPosition();
+
 
             GameObject enemy = Instantiate(selectedGroup.enemy, spawnPosition, Quaternion.identity);
             activeEnemies.Add(enemy);
@@ -175,6 +173,43 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
+    Vector2 GetOffScreenSpawnPosition(float padding = 2f)
+    {
+        CameraBounds.Instance.UpdateBounds();
+
+        Vector2 min = CameraBounds.Instance.Min;
+        Vector2 max = CameraBounds.Instance.Max;
+
+        // Add padding so enemies spawn *just outside*
+        float left = min.x - padding;
+        float right = max.x + padding;
+        float top = max.y + padding;
+        float bottom = min.y - padding;
+
+        // Choose one of the 4 sides randomly
+        int side = Random.Range(0, 4);
+
+        switch (side)
+        {
+            // Left side
+            case 0:
+                return new Vector2(left, Random.Range(min.y, max.y));
+
+            // Right side
+            case 1:
+                return new Vector2(right, Random.Range(min.y, max.y));
+
+            // Top side
+            case 2:
+                return new Vector2(Random.Range(min.x, max.x), top);
+
+            // Bottom side
+            default:
+                return new Vector2(Random.Range(min.x, max.x), bottom);
+        }
+    }
+
 
     // Called when enemy dies
     public void OnEnemyKilled(int waveIndex)

@@ -100243,8 +100243,8 @@ MonoBehaviour:
     killCount: 0
   currentWaveCount: 0
   waveInterval: 3
-  difficultyRampRate: 0.01
-  maxDifficultyMultiplier: 5
+  difficultyRampRate: 0.1
+  maxDifficultyMultiplier: 6
 --- !u!1 &1545553398
 GameObject:
   m_ObjectHideFlags: 0
@@ -101045,6 +101045,10 @@ PrefabInstance:
     - target: {fileID: 1610919223386422775, guid: ac145d1c7da8d4dcbb2ec1be77d7e42d, type: 3}
       propertyPath: m_Name
       value: CardSkill1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937884070789496920, guid: ac145d1c7da8d4dcbb2ec1be77d7e42d, type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -112181,6 +112185,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: smitePrefab
+      value: 
+      objectReference: {fileID: 3273947580076218437, guid: 249ce7515c6a344069071e52bc9a232c, type: 3}
+    - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: skillDefinition
       value: 
       objectReference: {fileID: 11400000, guid: bc53332a670874dd8a74d99e1e066ded, type: 2}
@@ -112329,22 +112337,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1329810833673139927}
-    - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1329810833673139926}
   m_SourcePrefab: {fileID: 100100000, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
---- !u!114 &1329810833673139926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075490270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2c2c7e73de524baea781c3c386bcab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillEffectHandler
 --- !u!114 &1329810833673139927
 MonoBehaviour:
   m_ObjectHideFlags: 0
