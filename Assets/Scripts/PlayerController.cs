@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     private bool canDash = true;
 
+    
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

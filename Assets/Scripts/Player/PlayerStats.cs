@@ -11,6 +11,7 @@ public class PlayerStats : MonoBehaviour
     public float maxHealth;
     public float currentDamage;
     public float currentMoveSpeed;
+    public float speedBeforeDebuffed;
     public float currentDashSpeed;
 
     public bool isDead = false;
@@ -58,6 +59,7 @@ public class PlayerStats : MonoBehaviour
         currentDamage = playerData.Damage;
         currentDashSpeed = playerData.BaseDashSpeed;
         currentMoveSpeed = playerData.BaseMoveSpeed;
+        speedBeforeDebuffed = currentMoveSpeed;
 
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
@@ -147,7 +149,10 @@ public class PlayerStats : MonoBehaviour
             currentDashSpeed += DashSpeedIncreasePerLevel;
 
         if (currentMoveSpeed < 20)
+        {
             currentMoveSpeed += MoveSpeedIncreasePerLevel;
+            speedBeforeDebuffed += MoveSpeedIncreasePerLevel;
+        }
 
         Debug.Log($"LEVEL UP → HP: {currentHealth}/{maxHealth}, DMG: {currentDamage}");
     }
@@ -176,6 +181,13 @@ public class PlayerStats : MonoBehaviour
         isInvincible = true;
         yield return new WaitForSeconds(damageCooldown);
         isInvincible = false;
+    }
+
+    public IEnumerator DebuffSpeed(float duration = 5f)
+    {
+        currentMoveSpeed = currentMoveSpeed / 2;
+        yield return new WaitForSeconds(duration);
+        currentMoveSpeed = speedBeforeDebuffed;
     }
 
     void Die()
