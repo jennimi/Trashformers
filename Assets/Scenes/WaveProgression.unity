@@ -98673,7 +98673,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1369a18e44524af3848940ec19ad5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashUI
-  cooldownImage: {fileID: 1820596522}
 --- !u!114 &337222758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100132,8 +100131,13 @@ MonoBehaviour:
   currentWaveProgress: 0
   currentWaveLimit: 10
   currentWave: 0
-  waveText: {fileID: 649464213}
-  waveProgressBar: {fileID: 0}
+  tileset1: {fileID: 0}
+  tileset2: {fileID: 0}
+  tileset3: {fileID: 0}
+  tileset4: {fileID: 0}
+  tileset5: {fileID: 0}
+  winningContainer: {fileID: 0}
+  waveClearSFX: {fileID: 0}
 --- !u!1 &1713005404
 GameObject:
   m_ObjectHideFlags: 0
@@ -111404,6 +111408,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStorage
   maxCapacity: 6
   storageUI: {fileID: 117153753}
+--- !u!114 &2075490288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075490270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef977905edbdf49a49836262116177fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillState
 --- !u!1 &2082960198
 GameObject:
   m_ObjectHideFlags: 0
@@ -111539,6 +111555,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2635012944950739480, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: playerState
+      value: 
+      objectReference: {fileID: 2075490288}
     - target: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -111547,6 +111567,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3324815406159681160, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: skillDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: bc53332a670874dd8a74d99e1e066ded, type: 2}
     - target: {fileID: 4599697178837005718, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: dashUI
       value: 
@@ -111563,6 +111587,10 @@ PrefabInstance:
       propertyPath: dashCooldown
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5128463422893137798, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: skillDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 33a1528b41ada469b99048c8b581564f, type: 2}
     - target: {fileID: 5896794987442767874, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_LocalScale.x
       value: 10
@@ -111619,6 +111647,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8225147541219503702, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      propertyPath: skillDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 50091a6d21f704c8ba93618bb8142eda, type: 2}
     - target: {fileID: 8383077189512860373, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       propertyPath: m_BodyType
       value: 1
@@ -111634,6 +111666,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2075490276}
+    - targetCorrespondingSourceObject: {fileID: 1060869220229691158, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2075490288}
   m_SourcePrefab: {fileID: 100100000, guid: 6bcaa726824a5438da2df4be9ec2725e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
