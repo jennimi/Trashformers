@@ -98673,6 +98673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1369a18e44524af3848940ec19ad5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashUI
+  cooldownImage: {fileID: 1820596522}
+  cooldownTime: 0
+  cooldownRemaining: 0
+  coolingDown: 0
 --- !u!114 &337222758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100127,7 +100131,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42c5af5c4fa0149ee8a1b7896e9557f4, type: 2}
   - {fileID: 11400000, guid: ad15cfc17dcfe4c7688a344ee5518f9c, type: 2}
   allowedTypes: []
-  requiredAmountToRecyclePerType: 10
+  requiredAmountToRecyclePerType: 5
   currentWaveProgress: 0
   currentWaveLimit: 10
   currentWave: 0

@@ -186,12 +186,14 @@ public class PlayerStats : MonoBehaviour
 
     public IEnumerator DebuffSpeed(float duration = 5f)
     {
-        if (isSpeedDebuffed) return;
-        isSpeedDebuffed = true;
-        currentMoveSpeed = currentMoveSpeed / 2;
-        yield return new WaitForSeconds(duration);
-        currentMoveSpeed = speedBeforeDebuffed;
-        isSpeedDebuffed = false;
+        if (!isSpeedDebuffed)
+        {
+            isSpeedDebuffed = true;
+            currentMoveSpeed = currentMoveSpeed / 2;
+            yield return new WaitForSeconds(duration);
+            currentMoveSpeed = speedBeforeDebuffed;
+            isSpeedDebuffed = false;
+        }
     }
 
     void Die()
