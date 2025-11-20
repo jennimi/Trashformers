@@ -1,37 +1,42 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class TrashCan : MonoBehaviour
 {
-    public TrashType acceptedType;        
-    public WaveManager waveManager; 
-    public PlayerStorageController ui;  // Drag in Inspector
-    float deliverCooldown = 0.9f;
-    float deliverTimer = 0f;
+    public TrashType acceptedType;
+    public WaveManager waveManager;
+    public PlayerStorageUI ui;  // Drag in Inspector
 
-    private void Update()
-    {
-        if (deliverTimer > 0)
-            deliverTimer -= Time.deltaTime;
-    }
+    public float cooldownDuration = 1f;  // seconds
+    private bool canReceiveTrash = true;
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (deliverTimer > 0) return;
         if (!other.CompareTag("Player")) return;
+        if (!canReceiveTrash) return;   // gate is closed
 
         PlayerStorage storage = other.GetComponent<PlayerStorage>();
 
         if (storage == null) return;
-        if (storage.storage.Count == 0) return;
+        if (storage.items.Count == 0) return;
 
-        if (storage.storage[0] == acceptedType)
+        if (storage.items[0].type == acceptedType)
         {
-            storage.RemoveFirstTrash();
-            FindObjectOfType<PlayerStorageController>().RefreshUI();
-            waveManager.ProgressWave();
-
-            deliverTimer = deliverCooldown;
+            StartCoroutine(TrashCooldown());
+            TrashType type = storage.RemoveFirstTrash();
+            waveManager.AcceptTrash(acceptedType);
         }
+    }
+
+    private IEnumerator TrashCooldown()
+    {
+        canReceiveTrash = false;
+        Debug.Log("Trash can CLOSED: " + acceptedType);
+        yield return new WaitForSeconds(cooldownDuration);
+        canReceiveTrash = true;
+        Debug.Log("Trash can OPENED: " + acceptedType);
+
     }
 
 }

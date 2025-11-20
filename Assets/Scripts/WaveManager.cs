@@ -1,8 +1,22 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
+using System.Linq; // needed for OrderBy
+
 
 public class WaveManager : MonoBehaviour
 {
+    public List<TrashType> allTypes;
+    public List<TrashType> allowedTypes = new List<TrashType>();
+    public Dictionary<TrashType, int> recycleCounts = new Dictionary<TrashType, int>();
+    public Dictionary<TrashType, int> chosenTrashIndex = new Dictionary<TrashType, int>();
+    public Dictionary<TrashType, string> chosenTrashNames = new Dictionary<TrashType, string>();
+
+
+    public int requiredAmountToRecyclePerType = 5;
+
     public int currentWaveProgress = 0;
     public int currentWaveLimit = 10;
     public int currentWave = 1;   // start at wave 1
@@ -25,6 +39,10 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("STARTING");
+        requiredAmountToRecyclePerType = 2;
+
+        // instantiating data for first wave
         currentWave = 1;
 
         // 🔊 Setup audio source
@@ -36,6 +54,8 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         SendWaveUIUpdate(true);
+        updateAllowedTypes();
+        resetWaveProgress();
     }
 
     public void NextWave()
@@ -59,7 +79,80 @@ public class WaveManager : MonoBehaviour
         // Snap instantly when changing waves
         SendWaveUIUpdate(forceSnap: true);
 
+                updateAllowedTypes();
+        resetWaveProgress();
+
         OnWaveStarted?.Invoke(currentWave);
+    }
+
+    private void resetWaveProgress()
+    {
+        Debug.Log("BEFORE required amount per type: " + requiredAmountToRecyclePerType);
+        currentWaveProgress = 0;
+        currentWaveLimit = allowedTypes.Count * requiredAmountToRecyclePerType;
+        Debug.Log("allowed types: " + allowedTypes.Count);
+        Debug.Log("AFTER required amount per type: " + requiredAmountToRecyclePerType);
+    }
+
+    private void updateAllowedTypes()
+    {
+        recycleCounts = new Dictionary<TrashType, int>();
+
+        // IF MAU 2/ 3 RANDOM TYPES PER WEAVE
+        requiredAmountToRecyclePerType++;
+        allowedTypes.Clear();
+        List<TrashType> shuffled = allTypes.OrderBy(x => UnityEngine.Random.value).ToList();
+
+        for (int i = 0; i < 3 && i < shuffled.Count; i++)
+        {
+            allowedTypes.Add(shuffled[i]);
+            recycleCounts[shuffled[i]] = 0;
+        }
+
+        foreach (var type in allowedTypes)
+        {
+            int index = UnityEngine.Random.Range(0, 6);   // 0 to 5 inclusive
+            chosenTrashIndex[type] = index;
+            TrashInstance ti = type.prefabs[index].GetComponent<TrashInstance>();
+
+            chosenTrashNames[type] = ti.name;
+            Debug.Log("Type: " + type + " | Index: " + chosenTrashIndex[type] + " | Name: " + chosenTrashNames[type]);
+        }
+
+    }
+
+
+    private void UpdateWaveUI()
+    {
+        string text = $"Wave: {currentWave} | Progress: {currentWaveProgress}/{currentWaveLimit}\n";
+
+        foreach (var type in allowedTypes)
+        {
+            int collected = recycleCounts.ContainsKey(type) ? recycleCounts[type] : 0;
+            string trashName = chosenTrashNames[type];
+            text += $"{trashName}: {collected}/{requiredAmountToRecyclePerType}\n";
+        }
+    }
+
+    public void AcceptTrash(TrashType type)
+    {
+        if (!allowedTypes.Contains(type)) return;
+
+        if (!recycleCounts.ContainsKey(type)) return;
+
+        recycleCounts[type]++;
+
+        // Reached per-type limit?
+        if (recycleCounts[type] >= requiredAmountToRecyclePerType)
+        {
+            recycleCounts[type] = requiredAmountToRecyclePerType;
+            // remove all trash of this type from the map
+            FindObjectOfType<TrashSpawner>()?.DestroyTrashOfType(type);
+        }
+        else
+        {
+            ProgressWave();
+        }
     }
 
     public void ProgressWave()

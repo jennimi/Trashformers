@@ -3,7 +3,7 @@ using UnityEngine;
 public class WaveTestInput : MonoBehaviour
 {
     public PlayerStorage storage;
-    public PlayerStorageController ui;
+    public PlayerStorageUI ui;
     public WaveManager wave;
 
     void Update()
@@ -11,7 +11,7 @@ public class WaveTestInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // Try removing first trash item
-            if (storage.RemoveFirstTrash())
+            if (storage.RemoveFirstTrash() != null)
             {
                 ui.RefreshUI();  // update UI
                 wave.ProgressWave(); // test wave system
