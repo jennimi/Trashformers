@@ -31,7 +31,7 @@ public class WaveManager : MonoBehaviour
     public GameObject tileset5;
 
     [Header("Winning UI / Scene Objects")]
-    public GameObject winningContainer; 
+    public GameObject winningContainer;
 
     [Header("Wave Audio")]
     public AudioClip waveClearSFX;
@@ -48,7 +48,7 @@ public class WaveManager : MonoBehaviour
         // 🔊 Setup audio source
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
-        audioSource.volume = 0.8f; 
+        audioSource.volume = 0.8f;
     }
 
     private void Start()
@@ -79,7 +79,7 @@ public class WaveManager : MonoBehaviour
         // Snap instantly when changing waves
         SendWaveUIUpdate(forceSnap: true);
 
-                updateAllowedTypes();
+        updateAllowedTypes();
         resetWaveProgress();
 
         OnWaveStarted?.Invoke(currentWave);
@@ -118,6 +118,7 @@ public class WaveManager : MonoBehaviour
             chosenTrashNames[type] = ti.name;
             Debug.Log("Type: " + type + " | Index: " + chosenTrashIndex[type] + " | Name: " + chosenTrashNames[type]);
         }
+        UIManager.Instance.DisplaySelectedTrashUI(chosenTrashIndex);
 
     }
 

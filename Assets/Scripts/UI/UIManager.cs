@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class UIManager : MonoBehaviour
     public Image dashFillImage;
     private Coroutine dashRoutine;
     public TMP_Text dashCooldownText;
+
+    public Transform selectedTrashContainer;    // UI parent (Horizontal Layout Group)
+    public TrashUIItem trashUIItemPrefab;       // UI prefab
+
 
     void Awake()
     {
@@ -211,10 +216,56 @@ public class UIManager : MonoBehaviour
         }
 
         // Cooldown finished
-        dashFillImage.fillAmount = 0f; 
+        dashFillImage.fillAmount = 0f;
 
         if (dashCooldownText != null)
             dashCooldownText.text = "";
     }
+
+
+public void DisplaySelectedTrashUI(Dictionary<TrashType, int> chosenTrashIndex)
+{
+    if (selectedTrashContainer == null)
+    {
+        Debug.LogError("UIManager: selectedTrashContainer is NOT assigned!");
+        return;
+    }
+
+    // Clear previous UI icons
+    foreach (Transform child in selectedTrashContainer)
+        Destroy(child.gameObject);
+
+    // Loop through each selected trash type
+    foreach (var kvp in chosenTrashIndex)
+    {
+        TrashType type = kvp.Key;
+        int index = kvp.Value;
+
+        // Safety check
+        if (type.prefabs == null || type.prefabs.Count <= index)
+        {
+            Debug.LogError("TrashType doesn't have prefab index " + index);
+            continue;
+        }
+
+        GameObject prefab = type.prefabs[index];
+
+        // 🔥 EXACT LOGIC YOU USED IN STORAGE
+        Sprite icon = prefab.GetComponentInChildren<SpriteRenderer>()?.sprite;
+
+        if (icon == null)
+        {
+            Debug.LogError("UIManager: SpriteRenderer missing on prefab: " + prefab.name);
+            continue;
+        }
+
+        // Create UI element
+        // TrashUIItem uiItem = Instantiate(trashUIItemPrefab, selectedTrashContainer);
+
+        // Assign sprite + text
+        // uiItem.Setup(icon, prefab.name);
+    }
+}
+
 
 }
