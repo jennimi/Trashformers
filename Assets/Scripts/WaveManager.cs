@@ -10,6 +10,9 @@ public class WaveManager : MonoBehaviour
 {
     public List<TrashType> allTypes;
     public List<TrashType> allowedTypes = new List<TrashType>();
+
+    public Dictionary<TrashType, int> chosenTrash = new Dictionary<TrashType, int>();
+
     public Dictionary<TrashType, int> recycleCounts = new Dictionary<TrashType, int>();
     public int requiredAmountToRecyclePerType = 5;
 
@@ -22,7 +25,17 @@ public class WaveManager : MonoBehaviour
 
     public event Action<int> OnWaveStarted;
 
-    private void Start()
+    [Header("Tilesets to hide per wave clear")]
+    public GameObject tileset1;
+    public GameObject tileset2;
+    public GameObject tileset3;
+    public GameObject tileset4;
+    public GameObject tileset5;
+
+    [Header("Winning UI / Scene Objects")]
+    public GameObject winningContainer; 
+
+    private void Awake()
     {
         Debug.Log("STARTING");
         requiredAmountToRecyclePerType = 2;
@@ -40,20 +53,35 @@ public class WaveManager : MonoBehaviour
 
         
         UpdateWaveUI();
-        UpdateWaveBar();
+    }
+
+    private void Start()
+    {
+        SendWaveUIUpdate(true);
     }
 
     public void NextWave()
     {
-        if (currentWave >= 6) return; // whats this for
+        if (currentWave >= 6)
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.ShowWinningUI();
+
+            return;
+        }
 
         // change variables for new wave here
         currentWave++;
         updateAllowedTypes();
         resetWaveProgress();
 
-        UpdateWaveBar(forceSnap: true);
         UpdateWaveUI();
+
+        // Hide dirty palette for THIS wave
+        HideTilesetForWave(currentWave);
+        
+        // Snap instantly when changing waves
+        SendWaveUIUpdate(forceSnap: true);
 
         OnWaveStarted?.Invoke(currentWave);
     }
@@ -82,6 +110,11 @@ public class WaveManager : MonoBehaviour
             recycleCounts[shuffled[i]] = 0;
         }
 
+        foreach (var type in allowedTypes)
+        {
+            chosenTrash[type] = UnityEngine.Random.Range(0, 6);
+        }
+
         // IF MAU ADD NEW TYPE EVERY WAVE
         // requiredAmountToRecyclePerType = 10;
         // foreach (TrashType type in allTypes)
@@ -107,8 +140,7 @@ public class WaveManager : MonoBehaviour
 
         if (waveText != null) waveText.text = text; // keep if you want local TMP
 
-        if (UIManager.Instance != null)
-            UIManager.Instance.UpdateWaveText(text);
+        //idk what to do here
     }
 
     public void AcceptTrash(TrashType type)
@@ -136,52 +168,42 @@ public class WaveManager : MonoBehaviour
         if (currentWaveProgress >= currentWaveLimit)
             NextWave();
 
-        UpdateWaveUI();
-        UpdateWaveBar();
+        SendWaveUIUpdate();
     }
 
-    private void UpdateWaveBar(bool forceSnap = false)
+    private void SendWaveUIUpdate(bool forceSnap = false)
     {
-
-        if (UIManager.Instance != null && UIManager.Instance.waveBar != null)
-        {
-            // hard cap full at wave 6
-            if (currentWave >= 6)
-            {
-                UIManager.Instance.UpdateWaveBar(UIManager.Instance.waveBar.maxValue);
-                return;
-            }
-
-            if (forceSnap)
-            {
-                UIManager.Instance.UpdateWaveBar(currentWave - 1);
-                return;
-            }
-
-            float normalized = (float)currentWaveProgress / currentWaveLimit;
-            UIManager.Instance.UpdateWaveBar((currentWave - 1) + normalized);
+        if (UIManager.Instance == null)
             return;
-        }
 
-        if (waveProgressBar == null) return;
-
-        // 🔒 HARD CAP — Wave 6 = full bar, no more progress
-        if (currentWave >= 6)
-        {
-            waveProgressBar.value = waveProgressBar.maxValue;
-            return;
-        }
-
-        // Snap exactly to whole wave if needed
-        if (forceSnap)
-        {
-            waveProgressBar.value = currentWave - 1;
-            return;
-        }
-
-        // Smooth progress inside the wave (Wave 1 = 0→1, Wave 2 = 1→2, etc.)
-        float normalizedWaveProgress = (float)currentWaveProgress / currentWaveLimit;
-        waveProgressBar.value = (currentWave - 1) + normalizedWaveProgress;
+        UIManager.Instance.UpdateWaveUI(
+            currentWave,
+            currentWaveProgress,
+            currentWaveLimit,
+            forceSnap
+        );
     }
 
+    // CLEANLINESS
+    private void HideTilesetForWave(int wave)
+    {
+        switch (wave)
+        {
+            case 1:
+                if (tileset1 != null) tileset1.SetActive(false);
+                break;
+            case 2:
+                if (tileset2 != null) tileset2.SetActive(false);
+                break;
+            case 3:
+                if (tileset3 != null) tileset3.SetActive(false);
+                break;
+            case 4:
+                if (tileset4 != null) tileset4.SetActive(false);
+                break;
+            case 5:
+                if (tileset5 != null) tileset5.SetActive(false);
+                break;
+        }
+    }
 }
