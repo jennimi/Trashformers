@@ -127,11 +127,14 @@ public class WaveManager : MonoBehaviour
         // Reached per-type limit?
         if (recycleCounts[type] >= requiredAmountToRecyclePerType)
         {
+            recycleCounts[type] = requiredAmountToRecyclePerType;
             // remove all trash of this type from the map
             FindObjectOfType<TrashSpawner>()?.DestroyTrashOfType(type);
         }
-
-        ProgressWave();
+        else
+        {
+            ProgressWave();
+        }
     }
 
     public void ProgressWave()
