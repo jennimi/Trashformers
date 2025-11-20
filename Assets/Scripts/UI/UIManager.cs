@@ -259,11 +259,11 @@ public void DisplaySelectedTrashUI(Dictionary<TrashType, int> chosenTrashIndex)
             continue;
         }
 
-        // Create UI element
-        // TrashUIItem uiItem = Instantiate(trashUIItemPrefab, selectedTrashContainer);
+        // // Create UI element
+        TrashUIItem uiItem = Instantiate(trashUIItemPrefab, selectedTrashContainer);
 
-        // Assign sprite + text
-        // uiItem.Setup(icon, prefab.name);
+        // // Assign sprite + text
+        uiItem.Setup(icon, prefab.name);
     }
 }
 

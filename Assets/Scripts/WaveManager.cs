@@ -14,6 +14,8 @@ public class WaveManager : MonoBehaviour
     public Dictionary<TrashType, int> chosenTrashIndex = new Dictionary<TrashType, int>();
     public Dictionary<TrashType, string> chosenTrashNames = new Dictionary<TrashType, string>();
 
+    public static WaveManager Instance { get; private set; }
+
 
     public int requiredAmountToRecyclePerType = 5;
 
@@ -111,13 +113,22 @@ public class WaveManager : MonoBehaviour
 
         foreach (var type in allowedTypes)
         {
-            int index = UnityEngine.Random.Range(0, 6);   // 0 to 5 inclusive
+            int index = UnityEngine.Random.Range(0, type.prefabs.Count);
             chosenTrashIndex[type] = index;
-            TrashInstance ti = type.prefabs[index].GetComponent<TrashInstance>();
 
-            chosenTrashNames[type] = ti.name;
-            Debug.Log("Type: " + type + " | Index: " + chosenTrashIndex[type] + " | Name: " + chosenTrashNames[type]);
+            GameObject prefab = type.prefabs[index];
+
+            // Get the sprite
+            SpriteRenderer sr = prefab.GetComponentInChildren<SpriteRenderer>();
+            Sprite icon = sr != null ? sr.sprite : null;
+
+            // Store name
+            TrashInstance ti = prefab.GetComponent<TrashInstance>();
+            chosenTrashNames[type] = ti != null ? ti.name : prefab.name;
+
+            Debug.Log($"Type: {type} | Index: {index} | Sprite: {icon}");
         }
+
         UIManager.Instance.DisplaySelectedTrashUI(chosenTrashIndex);
 
     }
