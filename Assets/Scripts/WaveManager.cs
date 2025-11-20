@@ -1,47 +1,116 @@
 using UnityEngine;
-using TMPro;   // ✅ Import TextMeshPro namespace
 using System;
 
 public class WaveManager : MonoBehaviour
 {
     public int currentWaveProgress = 0;
     public int currentWaveLimit = 10;
+    public int currentWave = 1;   // start at wave 1
 
-    public int currentWave = 0;
-    public TMP_Text waveText;
     public event Action<int> OnWaveStarted;
+
+    [Header("Tilesets to hide per wave clear")]
+    public GameObject tileset1;
+    public GameObject tileset2;
+    public GameObject tileset3;
+    public GameObject tileset4;
+    public GameObject tileset5;
+
+    [Header("Winning UI / Scene Objects")]
+    public GameObject winningContainer; 
+
+    [Header("Wave Audio")]
+    public AudioClip waveClearSFX;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        currentWave = 1;
+
+        // 🔊 Setup audio source
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.volume = 0.8f; 
+    }
 
     private void Start()
     {
-        UpdateWaveUI();
+        SendWaveUIUpdate(true);
     }
 
     public void NextWave()
     {
+        if (currentWave >= 6)
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.ShowWinningUI();
+
+            return;
+        }
+
+        if (waveClearSFX != null)
+            audioSource.PlayOneShot(waveClearSFX);
+
+        // Hide dirty palette for THIS wave
+        HideTilesetForWave(currentWave);
+
         currentWave++;
-        UpdateWaveUI();
+
+        // Snap instantly when changing waves
+        SendWaveUIUpdate(forceSnap: true);
 
         OnWaveStarted?.Invoke(currentWave);
-    }
-
-    private void UpdateWaveUI()
-    {
-        if (waveText != null)
-        {
-            waveText.text = "Wave: " + currentWave + "| Progress: " + currentWaveProgress + "/" +currentWaveLimit;
-        }
     }
 
     public void ProgressWave()
     {
         currentWaveProgress++;
+
         if (currentWaveProgress >= currentWaveLimit)
         {
             currentWaveProgress = 0;
             currentWaveLimit += 5;
+
             NextWave();
+            return;
         }
-        UpdateWaveUI();
+
+        SendWaveUIUpdate();
     }
 
+    private void SendWaveUIUpdate(bool forceSnap = false)
+    {
+        if (UIManager.Instance == null)
+            return;
+
+        UIManager.Instance.UpdateWaveUI(
+            currentWave,
+            currentWaveProgress,
+            currentWaveLimit,
+            forceSnap
+        );
+    }
+
+    // CLEANLINESS
+    private void HideTilesetForWave(int wave)
+    {
+        switch (wave)
+        {
+            case 1:
+                if (tileset1 != null) tileset1.SetActive(false);
+                break;
+            case 2:
+                if (tileset2 != null) tileset2.SetActive(false);
+                break;
+            case 3:
+                if (tileset3 != null) tileset3.SetActive(false);
+                break;
+            case 4:
+                if (tileset4 != null) tileset4.SetActive(false);
+                break;
+            case 5:
+                if (tileset5 != null) tileset5.SetActive(false);
+                break;
+        }
+    }
 }

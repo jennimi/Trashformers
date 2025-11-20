@@ -6,6 +6,10 @@ public class PlayerAutoAttack : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform firePoint;
 
+    [Header("Attack SFX")]
+    public AudioSource audioSource;
+    public AudioClip attackSFX;
+
     private PlayerStats stats;
     private PlayerController controller;
 
@@ -13,6 +17,9 @@ public class PlayerAutoAttack : MonoBehaviour
     {
         stats = GetComponent<PlayerStats>();
         controller = GetComponent<PlayerController>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         StartCoroutine(AutoAttackRoutine());
     }
@@ -28,6 +35,9 @@ public class PlayerAutoAttack : MonoBehaviour
 
     private void ShootProjectile()
     {
+        if (audioSource != null && attackSFX != null)
+            audioSource.PlayOneShot(attackSFX);
+
         EnemyStats target = FindNearestEnemy();
 
         Vector2 shootDir;

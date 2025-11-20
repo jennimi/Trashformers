@@ -100063,6 +100063,7 @@ MonoBehaviour:
   currentWaveLimit: 10
   currentWave: 0
   waveText: {fileID: 649464213}
+  waveProgressBar: {fileID: 0}
 --- !u!1 &1713005404
 GameObject:
   m_ObjectHideFlags: 0
@@ -111337,7 +111338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStorage
   maxCapacity: 6
   storage: []
-  storageController: {fileID: 0}
+  storageController: {fileID: 117153753}
 --- !u!114 &2075490282
 MonoBehaviour:
   m_ObjectHideFlags: 0

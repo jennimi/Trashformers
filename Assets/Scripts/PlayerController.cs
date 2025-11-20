@@ -6,16 +6,17 @@ public class PlayerController : MonoBehaviour
     private PlayerStats stats;
     private Rigidbody2D rb;
     private Animator animator;
+
     private Vector2 movement;
     public Vector2 lastMoveDir { get; private set; }
 
     [Header("Dash Settings")]
-    public float dashDuration = 0.3f;     // shorter movement burst
-    public float dashAnimBuffer = 0.15f;  // keep dash animation alive briefly after movement
+    public float dashDuration = 0.3f;
+    public float dashAnimBuffer = 0.15f;
     public float dashCooldown = 60f;
+
     private bool isDashing = false;
     private bool canDash = true;
-    [SerializeField] private DashUI dashUI;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) return; // skip normal input during dash
+        if (isDashing) return;
 
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
@@ -41,18 +42,26 @@ public class PlayerController : MonoBehaviour
         if (movement.sqrMagnitude > 0.01f)
         {
             lastMoveDir = new Vector2(
-                Mathf.RoundToInt(Mathf.Clamp(movement.x, -1f, 1f)),
-                Mathf.RoundToInt(Mathf.Clamp(movement.y, -1f, 1f))
+                Mathf.RoundToInt(Mathf.Clamp(movement.x, -1, 1)),
+                Mathf.RoundToInt(Mathf.Clamp(movement.y, -1, 1))
             );
 
             animator.SetFloat("LastMoveX", lastMoveDir.x);
             animator.SetFloat("LastMoveY", lastMoveDir.y);
         }
 
+        // DASH INPUT
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
+
+        // PAUSE
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.TogglePause();
+        }
+
     }
 
     void FixedUpdate()
@@ -64,7 +73,10 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         canDash = false;
-        dashUI.StartCooldown(dashCooldown); // start UI cooldown
+
+        // 🔥 Start cooldown UI through UIManager
+        if (UIManager.Instance != null)
+            UIManager.Instance.StartDashCooldown(dashCooldown);
 
         isDashing = true;
         animator.SetBool("isDashing", true);
@@ -72,27 +84,21 @@ public class PlayerController : MonoBehaviour
         Vector2 dashDirection = (movement.sqrMagnitude > 0.01f) ? movement : lastMoveDir;
         float startTime = Time.time;
 
-        // actual movement burst
+        // physical dash burst
         while (Time.time < startTime + dashDuration)
         {
             rb.MovePosition(rb.position + dashDirection.normalized * stats.currentDashSpeed * Time.fixedDeltaTime);
-
-            yield return new WaitForFixedUpdate(); // use physics tick
+            yield return new WaitForFixedUpdate();
         }
 
-        // stop physical dash, but keep dash animation alive a bit longer
+        // keep animation alive slightly longer
         yield return new WaitForSeconds(dashAnimBuffer);
 
         isDashing = false;
         animator.SetBool("isDashing", false);
 
-        // wait for cooldown to finish BEFORE allowing dash again
-        float elapsed = 0f;
-        while (elapsed < dashCooldown)
-        {
-            elapsed += Time.deltaTime;
-            yield return null; // wait until next frame
-        }
+        // ⏳ WAIT FOR THE SAME COOLDOWN UI IS USING
+        yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
     }

@@ -151,7 +151,6 @@ MonoBehaviour:
   dashDuration: 0.3
   dashAnimBuffer: 0.15
   dashCooldown: 60
-  dashUI: {fileID: 0}
 --- !u!50 &8383077189512860373
 Rigidbody2D:
   serializedVersion: 5
@@ -267,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAutoAttack
   projectilePrefab: {fileID: 7577857958888068951, guid: 40d853a27ad9d44ffa9dba62af9aeb36, type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 5896794987442767874}
 --- !u!114 &8225147541219503702
 MonoBehaviour:
   m_ObjectHideFlags: 0
