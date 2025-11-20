@@ -19,9 +19,18 @@ public class WaveManager : MonoBehaviour
     [Header("Winning UI / Scene Objects")]
     public GameObject winningContainer; 
 
+    [Header("Wave Audio")]
+    public AudioClip waveClearSFX;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         currentWave = 1;
+
+        // 🔊 Setup audio source
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.volume = 0.8f; 
     }
 
     private void Start()
@@ -38,6 +47,9 @@ public class WaveManager : MonoBehaviour
 
             return;
         }
+
+        if (waveClearSFX != null)
+            audioSource.PlayOneShot(waveClearSFX);
 
         // Hide dirty palette for THIS wave
         HideTilesetForWave(currentWave);

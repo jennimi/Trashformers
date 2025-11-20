@@ -7,19 +7,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Fade Overlay")]
-    public Image fadeOverlay;            // Black screen
+    public Image fadeOverlay;
     public float fadeDuration = 1f;
     public float winningFadeDuration = 1f;
 
     [Header("UI Panels")]
     public GameObject gameOverPanel;
     public GameObject pausePanel;
-    public GameObject winningPanel; 
+    public GameObject winningPanel;
 
-    [Header("Audio")]
-    public AudioClip backgroundMusic;
+    [Header("BGM Clips")]
+    public AudioClip normalMusic;
+    public AudioClip gameOverMusic;
+    public AudioClip levelClearedMusic;
+
     private AudioSource audioSource;
-
 
     private bool isPaused = false;
     public bool isGameOver = false;
@@ -29,13 +31,13 @@ public class GameManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Audio setup
+        // --- AUDIO SOURCE SETUP ---
         audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = backgroundMusic;
-        audioSource.loop = true; // ensures it keeps looping
-        audioSource.playOnAwake = false; // optional
-        audioSource.volume = 0.5f; // adjust as needed
-        audioSource.Play(); // start playing
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+
+        // Start playing normal music
+        PlayBGM(normalMusic, 0.4f);
 
         // Hide panels
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
@@ -49,17 +51,31 @@ public class GameManager : MonoBehaviour
     }
 
     // ------------------------------------------------
+    // BGM SWITCHER
+    // ------------------------------------------------
+    public void PlayBGM(AudioClip clip, float volume = 0.5f)
+    {
+        if (clip == null || audioSource == null) return;
+
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.volume = volume;
+        audioSource.Play();
+    }
+
+    // ------------------------------------------------
     // LEVEL CLEARED
     // ------------------------------------------------
     public void ShowWinningUI()
     {
+        PlayBGM(levelClearedMusic, 0.5f);   // <--- MUSIC CHANGE HERE
+
         if (winningPanel != null)
             StartCoroutine(WinningRoutine());
     }
 
     private IEnumerator WinningRoutine()
     {
-        // Make sure overlay is active and invisible
         fadeOverlay.gameObject.SetActive(true);
         Color c = fadeOverlay.color;
         c.a = 0f;
@@ -79,7 +95,6 @@ public class GameManager : MonoBehaviour
         c.a = targetAlpha;
         fadeOverlay.color = c;
 
-        // Show winning UI
         winningPanel.SetActive(true);
     }
 
@@ -89,6 +104,9 @@ public class GameManager : MonoBehaviour
     public void TriggerGameOver()
     {
         isGameOver = true;
+
+        // Change music
+        PlayBGM(gameOverMusic, 0.5f);
 
         foreach (EnemyStats e in EnemyStats.AllEnemies)
         {
@@ -100,10 +118,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameOverRoutine()
     {
-        // 1. Wait for death animation (unscaled, so pause won’t interrupt)
         yield return new WaitForSecondsRealtime(0.7f);
 
-        // 2. Make sure overlay is active and invisible
         fadeOverlay.gameObject.SetActive(true);
         Color c = fadeOverlay.color;
         c.a = 0f;
@@ -112,28 +128,20 @@ public class GameManager : MonoBehaviour
         float t = 0f;
         float targetAlpha = 0.95f;
 
-        // 3. Fade using unscaled time
         while (t < fadeDuration)
         {
-            t += Time.unscaledDeltaTime; // << THE FIX
+            t += Time.unscaledDeltaTime;
 
-            float a = Mathf.Lerp(0f, targetAlpha, t / fadeDuration);
-
-            c.a = a;
+            c.a = Mathf.Lerp(0f, targetAlpha, t / fadeDuration);
             fadeOverlay.color = c;
 
             yield return null;
         }
 
-        // 4. Make sure final alpha is applied
         c.a = targetAlpha;
         fadeOverlay.color = c;
 
-        // 5. Show Game Over UI
         gameOverPanel.SetActive(true);
-
-        // 6. Pause AFTER fade (if you want)
-        // Time.timeScale = 0f;
     }
 
     // ------------------------------------------------
@@ -157,7 +165,6 @@ public class GameManager : MonoBehaviour
         if (pausePanel != null)
             pausePanel.SetActive(true);
 
-        // Fade screen slightly (optional)
         if (fadeOverlay != null)
             fadeOverlay.color = new Color(0, 0, 0, 0.4f);
     }
@@ -172,7 +179,6 @@ public class GameManager : MonoBehaviour
         if (pausePanel != null)
             pausePanel.SetActive(false);
 
-        // Remove fade tint
         if (fadeOverlay != null)
             fadeOverlay.color = new Color(0, 0, 0, 0f);
     }
@@ -193,5 +199,4 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
-
 }
