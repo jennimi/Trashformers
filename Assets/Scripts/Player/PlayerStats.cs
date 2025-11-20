@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     public float currentDashSpeed;
 
     public bool isDead = false;
+    public bool isSpeedDebuffed = false;
 
     [Header("Experience / Level")]
     public int experience = 0;
@@ -185,9 +186,12 @@ public class PlayerStats : MonoBehaviour
 
     public IEnumerator DebuffSpeed(float duration = 5f)
     {
+        if (isSpeedDebuffed) return;
+        isSpeedDebuffed = true;
         currentMoveSpeed = currentMoveSpeed / 2;
         yield return new WaitForSeconds(duration);
         currentMoveSpeed = speedBeforeDebuffed;
+        isSpeedDebuffed = false;
     }
 
     void Die()
